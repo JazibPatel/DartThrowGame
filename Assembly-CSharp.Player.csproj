@@ -57,13 +57,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Throwknife\script\boardRotator.cs" />
+    <Compile Include="Assets\Throwknife\script\GameManager.cs" />
+    <Compile Include="Assets\Throwknife\script\dartRedManagerScript.cs" />
     <Compile Include="Assets\Throwknife\script\ScoreValueScript.cs" />
     <Compile Include="Assets\1,2 Player\script\SceneLoader.cs" />
     <Compile Include="Assets\Throwknife\script\dartBlueScript.cs" />
     <Compile Include="Assets\1,2 Player\script\DisplayScript.cs" />
     <Compile Include="Assets\scr.cs" />
     <Compile Include="Assets\Throwknife\script\dartScript.cs" />
-    <Compile Include="Assets\Throwknife\script\GameManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

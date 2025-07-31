@@ -3,24 +3,24 @@
   "WorkspaceRootPath": "D:\\Jazib\\Unity\\1,2 Player\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E9CB522E-3584-6581-7E05-859BD1102346}|Assembly-CSharp.csproj|d:\\jazib\\unity\\1,2 player\\assets\\throwknife\\script\\dartscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E9CB522E-3584-6581-7E05-859BD1102346}|Assembly-CSharp.csproj|D:\\Jazib\\Unity\\1,2 Player\\assets\\throwknife\\script\\dartscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E9CB522E-3584-6581-7E05-859BD1102346}|Assembly-CSharp.csproj|solutionrelative:assets\\throwknife\\script\\dartscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E9CB522E-3584-6581-7E05-859BD1102346}|Assembly-CSharp.csproj|D:\\Jazib\\Unity\\1,2 Player\\assets\\throwknife\\script\\scorevaluescript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E9CB522E-3584-6581-7E05-859BD1102346}|Assembly-CSharp.csproj|solutionrelative:assets\\throwknife\\script\\scorevaluescript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E9CB522E-3584-6581-7E05-859BD1102346}|Assembly-CSharp.csproj|D:\\Jazib\\Unity\\1,2 Player\\assets\\throwknife\\script\\boardrotator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E9CB522E-3584-6581-7E05-859BD1102346}|Assembly-CSharp.csproj|solutionrelative:assets\\throwknife\\script\\boardrotator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E9CB522E-3584-6581-7E05-859BD1102346}|Assembly-CSharp.csproj|D:\\Jazib\\Unity\\1,2 Player\\assets\\throwknife\\script\\dartbluescript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E9CB522E-3584-6581-7E05-859BD1102346}|Assembly-CSharp.csproj|solutionrelative:assets\\throwknife\\script\\dartbluescript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E9CB522E-3584-6581-7E05-859BD1102346}|Assembly-CSharp.csproj|d:\\jazib\\unity\\1,2 player\\assets\\throwknife\\script\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E9CB522E-3584-6581-7E05-859BD1102346}|Assembly-CSharp.csproj|solutionrelative:assets\\throwknife\\script\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E9CB522E-3584-6581-7E05-859BD1102346}|Assembly-CSharp.csproj|D:\\Jazib\\Unity\\1,2 Player\\assets\\throwknife\\script\\scorevaluescript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E9CB522E-3584-6581-7E05-859BD1102346}|Assembly-CSharp.csproj|solutionrelative:assets\\throwknife\\script\\scorevaluescript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E9CB522E-3584-6581-7E05-859BD1102346}|Assembly-CSharp.csproj|d:\\jazib\\unity\\1,2 player\\assets\\throwknife\\script\\dartredmanagerscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E9CB522E-3584-6581-7E05-859BD1102346}|Assembly-CSharp.csproj|solutionrelative:assets\\throwknife\\script\\dartredmanagerscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E9CB522E-3584-6581-7E05-859BD1102346}|Assembly-CSharp.csproj|D:\\Jazib\\Unity\\1,2 Player\\assets\\throwknife\\script\\boardrotator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E9CB522E-3584-6581-7E05-859BD1102346}|Assembly-CSharp.csproj|solutionrelative:assets\\throwknife\\script\\boardrotator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,33 +38,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "GameManager.cs",
-              "DocumentMoniker": "D:\\Jazib\\Unity\\1,2 Player\\Assets\\Throwknife\\script\\GameManager.cs",
-              "RelativeDocumentMoniker": "Assets\\Throwknife\\script\\GameManager.cs",
-              "ToolTip": "D:\\Jazib\\Unity\\1,2 Player\\Assets\\Throwknife\\script\\GameManager.cs",
-              "RelativeToolTip": "Assets\\Throwknife\\script\\GameManager.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABkAAAAyAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "dartRedManagerScript.cs",
+              "DocumentMoniker": "D:\\Jazib\\Unity\\1,2 Player\\Assets\\Throwknife\\script\\dartRedManagerScript.cs",
+              "RelativeDocumentMoniker": "Assets\\Throwknife\\script\\dartRedManagerScript.cs",
+              "ToolTip": "D:\\Jazib\\Unity\\1,2 Player\\Assets\\Throwknife\\script\\dartRedManagerScript.cs",
+              "RelativeToolTip": "Assets\\Throwknife\\script\\dartRedManagerScript.cs",
+              "ViewState": "AgIAAFsAAAAAAAAAAAAAwEgAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-31T05:06:45.956Z",
+              "WhenOpened": "2025-07-31T11:52:53.703Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "dartBlueScript.cs",
               "DocumentMoniker": "D:\\Jazib\\Unity\\1,2 Player\\Assets\\Throwknife\\script\\dartBlueScript.cs",
               "RelativeDocumentMoniker": "Assets\\Throwknife\\script\\dartBlueScript.cs",
               "ToolTip": "D:\\Jazib\\Unity\\1,2 Player\\Assets\\Throwknife\\script\\dartBlueScript.cs",
               "RelativeToolTip": "Assets\\Throwknife\\script\\dartBlueScript.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAA8wFEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADEAAAAAAAAAAAAmwDwAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-30T10:57:09.228Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "ScoreValueScript.cs",
               "DocumentMoniker": "D:\\Jazib\\Unity\\1,2 Player\\Assets\\Throwknife\\script\\ScoreValueScript.cs",
               "RelativeDocumentMoniker": "Assets\\Throwknife\\script\\ScoreValueScript.cs",
@@ -83,14 +83,14 @@
               "RelativeDocumentMoniker": "Assets\\Throwknife\\script\\dartScript.cs",
               "ToolTip": "D:\\Jazib\\Unity\\1,2 Player\\Assets\\Throwknife\\script\\dartScript.cs",
               "RelativeToolTip": "Assets\\Throwknife\\script\\dartScript.cs",
-              "ViewState": "AgIAAPwAAAAAAAAAAAAkwAABAABSAAAAAAAAAA==",
+              "ViewState": "AgIAAGsAAAAAAAAAAAAAwHUAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-30T07:35:38.825Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "boardRotator.cs",
               "DocumentMoniker": "D:\\Jazib\\Unity\\1,2 Player\\Assets\\Throwknife\\script\\boardRotator.cs",
               "RelativeDocumentMoniker": "Assets\\Throwknife\\script\\boardRotator.cs",
@@ -98,8 +98,7 @@
               "RelativeToolTip": "Assets\\Throwknife\\script\\boardRotator.cs",
               "ViewState": "AgIAABEAAAAAAAAAAAAkwCwAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-30T05:12:59.1Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-30T05:12:59.1Z"
             }
           ]
         }

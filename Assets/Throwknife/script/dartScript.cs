@@ -1,4 +1,3 @@
-//using System;
 //using System.Collections;
 //using System.Collections.Generic;
 //using UnityEngine;
@@ -8,17 +7,18 @@
 //    public Rigidbody2D rb;
 //    public float throwSpeed = 10f;
 //    public bool isThrown = false;
-//    private bool hasScored = false;
 
-//    void Start() { }
+//    private bool hasScored = false;
 
 //    void Update()
 //    {
+//        // Mouse click
 //        if (!isThrown && Input.GetMouseButtonDown(0) && IsTouchInAllowedArea(Input.mousePosition))
 //        {
 //            isThrown = true;
 //        }
 
+//        // Mobile touch
 //        if (!isThrown && Input.touchCount > 0)
 //        {
 //            Touch touch = Input.GetTouch(0);
@@ -28,115 +28,7 @@
 //            }
 //        }
 
-//        if (isThrown)
-//        {
-//            transform.Translate(Vector2.up * throwSpeed * Time.deltaTime, Space.World);
-//        }
-//    }
-
-//    private bool IsTouchInAllowedArea(Vector2 screenPosition)
-//    {
-//        float screenWidth = Screen.width;
-//        float screenHeight = Screen.height;
-
-//        Rect allowedArea = new Rect(
-//            screenWidth * 0.25f,
-//            0,
-//            screenWidth * 0.5f,
-//            screenHeight * 0.25f
-//        ); // middle bottom 25%
-//        return allowedArea.Contains(screenPosition);
-//    }
-
-//    private void OnTriggerEnter2D(Collider2D collision)
-//    {
-//        // Score first — but only once
-//        if (!hasScored)
-//        {
-//            ScoreValueScript scorePart = collision.GetComponent<ScoreValueScript>();
-//            if (scorePart != null)
-//            {
-//                hasScored = true;
-//                Debug.Log("Score: " + scorePart.value);
-//                // GameManager.instance.AddScore(scorePart.value);
-//            }
-//        }
-
-//        // Stick to dartboard
-//        if (collision.CompareTag("dartBoard"))
-//        {
-//            isThrown = false;
-
-//            transform.SetParent(collision.transform);
-
-//            rb = GetComponent<Rigidbody2D>();
-//            if (rb != null)
-//            {
-//                rb.velocity = Vector2.zero;
-//                rb.isKinematic = true;
-
-
-//            }
-//        }
-//    }
-//}
-
-
-
-
-// this one is different 
-
-//using System.Collections;
-//using UnityEngine;
-
-//public class dartScript : MonoBehaviour
-//{
-//    public Rigidbody2D rb;
-//    public float throwSpeed = 10f;
-//    public bool isThrown = false;
-//    private bool hasScored = false;
-//    private bool stuck = false;
-
-//    void OnEnable()
-//    {
-//        // Reset dart state when spawned
-//        isThrown = false;
-//        hasScored = false;
-//        stuck = false;
-
-//        if (rb == null)
-//            rb = GetComponent<Rigidbody2D>();
-
-//        if (rb != null)
-//        {
-//            rb.velocity = Vector2.zero;
-//            rb.isKinematic = false;
-//        }
-
-//        transform.SetParent(null); // detach from previous parent if any
-//        transform.localScale = Vector3.one; // reset scale
-//    }
-
-//    void Update()
-//    {
-//        if (stuck) return;
-
-//#if UNITY_EDITOR
-//        if (!isThrown && Input.GetMouseButtonDown(0) && IsTouchInAllowedArea(Input.mousePosition))
-//        {
-//            isThrown = true;
-//        }
-//#endif
-
-//        if (!isThrown && Input.touchCount > 0)
-//        {
-//            Touch touch = Input.GetTouch(0);
-//            if (touch.phase == TouchPhase.Began && IsTouchInAllowedArea(touch.position))
-//            {
-//                isThrown = true;
-//            }
-//        }
-
+//        // Move dart upward
 //        if (isThrown)
 //        {
 //            transform.Translate(Vector2.up * throwSpeed * Time.deltaTime, Space.World);
@@ -160,9 +52,9 @@
 
 //    private void OnTriggerEnter2D(Collider2D collision)
 //    {
-//        if (stuck) return;
+//        //Debug.Log("Hit Object: " + collision.name + " | Tag: " + collision.tag);
 
-//        // Score once
+//        // Score first — but only once
 //        if (!hasScored)
 //        {
 //            ScoreValueScript scorePart = collision.GetComponent<ScoreValueScript>();
@@ -174,89 +66,49 @@
 //            }
 //        }
 
+//        // Stick to dartboard
 //        if (collision.CompareTag("dartBoard"))
 //        {
 //            isThrown = false;
-//            stuck = true;
 
-//            transform.SetParent(collision.transform, worldPositionStays: true); // Keep original scale/position
+//            transform.SetParent(collision.transform);
 
 //            if (rb != null)
 //            {
 //                rb.velocity = Vector2.zero;
 //                rb.isKinematic = true;
 //            }
-
-//            StartCoroutine(SpawnNextDartWithDelay());
 //        }
-//    }
-
-//    IEnumerator SpawnNextDartWithDelay()
-//    {
-//        yield return new WaitForSeconds(0.5f);
-//        GameManager.instance.SpawnNextDart();
 //    }
 //}
 
 
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class dartScript : MonoBehaviour
 {
+    public float throwForce = 100f;
     public Rigidbody2D rb;
-    public float throwSpeed = 10f;
     public bool isThrown = false;
-
     private bool hasScored = false;
+    private bool isStuck = false; // NEW: Only true when dart hits the board
 
-    void Update()
+    private void Update()
     {
-        // Mouse click
-        if (!isThrown && Input.GetMouseButtonDown(0) && IsTouchInAllowedArea(Input.mousePosition))
+        if (Input.GetMouseButtonDown(0))
         {
-            isThrown = true;
-        }
-
-        // Mobile touch
-        if (!isThrown && Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began && IsTouchInAllowedArea(touch.position))
+            if (!isThrown)
             {
                 isThrown = true;
+                rb.AddForce(Vector2.up * throwForce);
             }
         }
-
-        // Move dart upward
-        if (isThrown)
-        {
-            transform.Translate(Vector2.up * throwSpeed * Time.deltaTime, Space.World);
-        }
-    }
-
-    private bool IsTouchInAllowedArea(Vector2 screenPosition)
-    {
-        float screenWidth = Screen.width;
-        float screenHeight = Screen.height;
-
-        Rect allowedArea = new Rect(
-            screenWidth * 0.25f,
-            0,
-            screenWidth * 0.5f,
-            screenHeight * 0.25f
-        );
-
-        return allowedArea.Contains(screenPosition);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Debug.Log("Hit Object: " + collision.name + " | Tag: " + collision.tag);
-
-        // Score first — but only once
+        // Score detection
         if (!hasScored)
         {
             ScoreValueScript scorePart = collision.GetComponent<ScoreValueScript>();
@@ -264,24 +116,36 @@ public class dartScript : MonoBehaviour
             {
                 hasScored = true;
                 Debug.Log("Score: " + scorePart.value);
-                // GameManager.instance.AddScore(scorePart.value);
             }
         }
 
         // Stick to dartboard
         if (collision.CompareTag("dartBoard"))
         {
-            isThrown = false;
+            StickDart(collision.transform);
+        }
 
-            transform.SetParent(collision.transform);
+        // Hit another dart
+        if (collision.CompareTag("dart"))
+        {
+            dartScript otherDart = collision.GetComponent<dartScript>();
 
-            if (rb != null)
+            // Destroy only if the other dart is already stuck
+            if (otherDart != null && otherDart.isStuck)
             {
-                rb.velocity = Vector2.zero;
-                rb.isKinematic = true;
+                Debug.Log("Hit a stuck dart! Destroying this dart.");
+                Destroy(gameObject);
             }
         }
     }
-}
 
+    private void StickDart(Transform parent)
+    {
+        isThrown = false;
+        isStuck = true; // Now this dart can block others
+        transform.SetParent(parent);
+        rb.velocity = Vector2.zero;
+        rb.isKinematic = true;
+    }
+}
 
