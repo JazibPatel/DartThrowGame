@@ -41,40 +41,42 @@
 //    }
 //}
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class dartRedManagerScript : MonoBehaviour
 {
-    public Transform dartHolder;     // Where the thrown dart will be parented
-    public Transform dartQueue;      // Parent of 5 dart icons
-    public List<SpriteRenderer> dartIcons = new List<SpriteRenderer>();
-
+    public Transform dartHolder;
+    public Transform dartQueue; // Parent of queue darts
     private int currentDartIndex = 0;
 
+    // Start is called before the first frame update
     void Start()
     {
-        // Fill dartIcons list automatically from dartQueue children
-        foreach (Transform child in dartQueue)
-        {
-            SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
-            if (sr != null)
-            {
-                dartIcons.Add(sr);
-            }
-        }
-
-        // Activate the first dart
         currentDart();
     }
 
+    // Update is called once per frame
     void Update()
     {
-        // Left mouse click to throw
         if (Input.GetMouseButtonDown(0))
         {
-            if (currentDartIndex < dartIcons.Count)
+            Vector3 mousePos = Input.mousePosition;
+
+            // Only allow throw if clicked in bottom 20% of the screen
+            if (mousePos.y <= Screen.height * 0.2f)
+            {
+                dartRedHolder();
+            }
+        }
+
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            Vector3 touchPos = Input.GetTouch(0).position;
+
+            if (touchPos.y <= Screen.height * 0.2f)
             {
                 dartRedHolder();
             }
@@ -83,44 +85,41 @@ public class dartRedManagerScript : MonoBehaviour
 
     public void currentDart()
     {
-        // Enable the first child (ready to throw)
+        // Only activate next dart if there is at least 1 child
         if (transform.childCount > 0)
         {
             transform.GetChild(0).gameObject.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("No darts left!");
         }
     }
 
     public void dartRedHolder()
     {
-        // Move the thrown dart to holder
-        Transform dart = transform.GetChild(0);
-        dart.SetParent(dartHolder);
+        if (transform.childCount == 0 || currentDartIndex >= dartQueue.childCount)
+            return;
 
-        // Change the corresponding queue dart color to black
-        if (currentDartIndex < dartIcons.Count)
+        transform.GetChild(0).gameObject.transform.SetParent(dartHolder.transform);
+
+        // Change color of the first dart in the queue to black
+        if (currentDartIndex < dartQueue.childCount)
         {
-            dartIcons[currentDartIndex].color = Color.black;
+            SpriteRenderer sr = dartQueue.GetChild(currentDartIndex).GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                sr.color = Color.black;
+            }
+            currentDartIndex++;
         }
 
-        // Move to next dart
-        currentDartIndex++;
-
-        // Wait and then get the next dart (if any left)
         StartCoroutine(getNextDart());
     }
 
     IEnumerator getNextDart()
     {
         yield return new WaitForSeconds(1f);
-
-        if (currentDartIndex < dartIcons.Count)
-        {
-            currentDart();
-        }
-        else
-        {
-            Debug.Log("All darts used!");
-        }
+        currentDart();
     }
 }
-

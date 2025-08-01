@@ -93,12 +93,31 @@ public class dartScript : MonoBehaviour
     public bool isThrown = false;
     private bool hasScored = false;
     private bool isStuck = false; // NEW: Only true when dart hits the board
+    private static int dartsThrown = 0;       // Shared among all darts
+    public static int maxDarts = 5;           // Limit to 5 darts
+    public GameObject hitEffect;
+
 
     private void Update()
     {
+        if (dartsThrown >= maxDarts || isThrown) return;
+
         if (Input.GetMouseButtonDown(0))
         {
-            if (!isThrown)
+            Vector3 mousePos = Input.mousePosition;
+
+            if (!isThrown && mousePos.y <= Screen.height * 0.2f)
+            {
+                isThrown = true;
+                rb.AddForce(Vector2.up * throwForce);
+            }
+        }
+
+        if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            Vector3 touchPos = Input.GetTouch(0).position;
+
+            if (touchPos.y <= Screen.height * 0.2f)
             {
                 isThrown = true;
                 rb.AddForce(Vector2.up * throwForce);
@@ -133,9 +152,18 @@ public class dartScript : MonoBehaviour
             // Destroy only if the other dart is already stuck
             if (otherDart != null && otherDart.isStuck)
             {
-                Debug.Log("Hit a stuck dart! Destroying this dart.");
-                Destroy(gameObject);
+                Debug.Log("Hit a stuck dart! Playing effect and destroying this dart.");
+
+                // Spawn VFX at dart position
+                if (hitEffect != null)
+                {
+                    Instantiate(hitEffect, transform.position, Quaternion.identity);
+                }
+
+                // Optionally add a tiny delay for better visibility
+                Destroy(gameObject, 0.1f);
             }
+
         }
     }
 
