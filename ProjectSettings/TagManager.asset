@@ -43,9 +43,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: background
+    uniqueID: 446064457
+    locked: 0
   - name: dart
     uniqueID: 4009100945
     locked: 0
   - name: dartBoard
     uniqueID: 3385343379
+    locked: 0
+  - name: effect
+    uniqueID: 2066879995
     locked: 0

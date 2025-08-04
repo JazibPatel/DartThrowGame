@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Throwknife/scenes/MainScene.unity
+- path: Assets/1_2_Player/Scenes/Main.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
