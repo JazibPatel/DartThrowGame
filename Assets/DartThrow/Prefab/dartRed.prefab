@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3101535918105189985}
   - component: {fileID: 3101535918105189986}
   - component: {fileID: 6438195268645809270}
+  - component: {fileID: 8742764869253272477}
   m_Layer: 0
   m_Name: dartRed
   m_TagString: dart
@@ -71,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1711770611
+  m_SortingLayerID: 446064457
   m_SortingLayer: 1
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: e92c8c3ea74e5bf4392daa4d00b9ea47, type: 3}
@@ -113,7 +114,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3101535918105189998}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -150,3 +151,91 @@ MonoBehaviour:
   playerNumber: 1
   hitEffect: {fileID: 5671074258377530418, guid: d6932455ee33cb048aba53c4b9a0bd00, type: 3}
   stickSound: {fileID: 8300000, guid: 9c99f4a6cf9c9324481ffce3ffbe1b0f, type: 3}
+--- !u!60 &8742764869253272477
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3101535918105189998}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 5.12, y: 5.12}
+    newSize: {x: 5.12, y: 5.12}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -1.1, y: -1.4699999}
+      - {x: -0.76, y: -1.3399999}
+      - {x: -0.52, y: -1.1999999}
+      - {x: -0.39999998, y: -1.11}
+      - {x: -0.26, y: -0.96}
+      - {x: -0.22, y: -0.88}
+      - {x: -0.19, y: -0.78999996}
+      - {x: -0.06, y: -0.65999997}
+      - {x: 1, y: 0.59999996}
+      - {x: 1.04, y: 0.57}
+      - {x: 1.25, y: 0.52}
+      - {x: 1.41, y: 0.51}
+      - {x: 1.55, y: 0.5}
+      - {x: 1.88, y: 0.5}
+      - {x: 2.01, y: 0.53}
+      - {x: 2.18, y: 0.59999996}
+      - {x: 2.35, y: 0.68}
+      - {x: 2.51, y: 0.85999995}
+      - {x: 2.56, y: 0.98999995}
+      - {x: 2.56, y: 1.4399999}
+      - {x: 2.46, y: 1.61}
+      - {x: 2.3799999, y: 1.6899999}
+      - {x: 2.24, y: 1.75}
+      - {x: 2.29, y: 1.8199999}
+      - {x: 2.37, y: 1.9699999}
+      - {x: 2.4099998, y: 2.09}
+      - {x: 2.3999999, y: 2.19}
+      - {x: 2.36, y: 2.31}
+      - {x: 2.26, y: 2.3899999}
+      - {x: 2.19, y: 2.4099998}
+      - {x: 2.04, y: 2.3999999}
+      - {x: 1.8199999, y: 2.29}
+      - {x: 1.7199999, y: 2.29}
+      - {x: 1.68, y: 2.3799999}
+      - {x: 1.61, y: 2.46}
+      - {x: 1.43, y: 2.56}
+      - {x: 0.97999996, y: 2.56}
+      - {x: 0.94, y: 2.55}
+      - {x: 0.79999995, y: 2.47}
+      - {x: 0.62, y: 2.26}
+      - {x: 0.53999996, y: 2.06}
+      - {x: 0.5, y: 1.8499999}
+      - {x: 0.5, y: 1.4}
+      - {x: 0.56, y: 1.0699999}
+      - {x: 0.59999996, y: 1}
+      - {x: -0.64, y: -0.06}
+      - {x: -0.82, y: -0.21}
+      - {x: -0.85999995, y: -0.19999999}
+      - {x: -1, y: -0.28}
+      - {x: -1.16, y: -0.45}
+      - {x: -1.23, y: -0.57}
+      - {x: -1.3299999, y: -0.77}
+      - {x: -1.43, y: -0.97999996}
+      - {x: -1.49, y: -1.22}
+      - {x: -1.51, y: -1.3199999}
+      - {x: -2.55, y: -2.37}
+      - {x: -2.56, y: -2.3799999}
+      - {x: -2.56, y: -2.52}
+      - {x: -2.53, y: -2.56}
+      - {x: -2.3799999, y: -2.56}
+      - {x: -2.37, y: -2.55}
+      - {x: -1.3199999, y: -1.51}
+      - {x: -1.26, y: -1.5}

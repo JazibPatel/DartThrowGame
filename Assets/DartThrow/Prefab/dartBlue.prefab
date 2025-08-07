@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3101535918105189996}
   - component: {fileID: 3101535918105189997}
   - component: {fileID: 3101535918105189985}
-  - component: {fileID: 3101535918105189986}
   - component: {fileID: 9215366415026522032}
+  - component: {fileID: 8701833438912123830}
   m_Layer: 0
   m_Name: dartBlue
   m_TagString: dart
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1711770611
+  m_SortingLayerID: 446064457
   m_SortingLayer: 1
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: e91e86aa289549d4ba825028cf1bc058, type: 3}
@@ -106,8 +106,26 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 5
---- !u!61 &3101535918105189986
-BoxCollider2D:
+--- !u!114 &9215366415026522032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3101535918105189998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc8c6aecb63f37147bfb049da84ed9cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  throwForce: 100
+  rb: {fileID: 3101535918105189985}
+  isThrown: 0
+  playerNumber: 2
+  hitEffect: {fileID: 5671074258377530418, guid: d6932455ee33cb048aba53c4b9a0bd00, type: 3}
+  stickSound: {fileID: 8300000, guid: 9c99f4a6cf9c9324481ffce3ffbe1b0f, type: 3}
+--- !u!60 &8701833438912123830
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -129,24 +147,70 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 5.12, y: 5.12}
-  m_EdgeRadius: 0
---- !u!114 &9215366415026522032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3101535918105189998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc8c6aecb63f37147bfb049da84ed9cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  throwForce: 100
-  rb: {fileID: 3101535918105189985}
-  isThrown: 0
-  playerNumber: 2
-  hitEffect: {fileID: 5671074258377530418, guid: d6932455ee33cb048aba53c4b9a0bd00, type: 3}
-  stickSound: {fileID: 8300000, guid: 9c99f4a6cf9c9324481ffce3ffbe1b0f, type: 3}
+  m_Points:
+    m_Paths:
+    - - {x: -1.17, y: -1.48}
+      - {x: -0.84999996, y: -1.38}
+      - {x: -0.48999998, y: -1.1899999}
+      - {x: -0.26999998, y: -0.98999995}
+      - {x: -0.22, y: -0.88}
+      - {x: -0.19, y: -0.78999996}
+      - {x: -0.13, y: -0.72999996}
+      - {x: 0, y: -0.59}
+      - {x: 0.89, y: 0.47}
+      - {x: 1, y: 0.58}
+      - {x: 1.31, y: 0.51}
+      - {x: 1.52, y: 0.48999998}
+      - {x: 1.89, y: 0.5}
+      - {x: 2.1399999, y: 0.57}
+      - {x: 2.35, y: 0.68}
+      - {x: 2.49, y: 0.84}
+      - {x: 2.54, y: 0.95}
+      - {x: 2.56, y: 1.01}
+      - {x: 2.56, y: 1.4399999}
+      - {x: 2.46, y: 1.5999999}
+      - {x: 2.3799999, y: 1.6899999}
+      - {x: 2.24, y: 1.75}
+      - {x: 2.3, y: 1.8199999}
+      - {x: 2.3999999, y: 2.05}
+      - {x: 2.3999999, y: 2.19}
+      - {x: 2.36, y: 2.31}
+      - {x: 2.26, y: 2.3899999}
+      - {x: 2.19, y: 2.4099998}
+      - {x: 2.04, y: 2.3999999}
+      - {x: 1.91, y: 2.35}
+      - {x: 1.74, y: 2.25}
+      - {x: 1.6899999, y: 2.3799999}
+      - {x: 1.5999999, y: 2.46}
+      - {x: 1.43, y: 2.55}
+      - {x: 1.42, y: 2.56}
+      - {x: 0.97999996, y: 2.56}
+      - {x: 0.84, y: 2.49}
+      - {x: 0.69, y: 2.34}
+      - {x: 0.62, y: 2.26}
+      - {x: 0.53999996, y: 2.06}
+      - {x: 0.51, y: 1.86}
+      - {x: 0.5, y: 1.76}
+      - {x: 0.5, y: 1.51}
+      - {x: 0.52, y: 1.3199999}
+      - {x: 0.53, y: 1.26}
+      - {x: 0.58, y: 1.04}
+      - {x: 0.59999996, y: 1}
+      - {x: 0.45999998, y: 0.89}
+      - {x: -0.16, y: 0.35}
+      - {x: -0.31, y: 0.22999999}
+      - {x: -0.51, y: 0.06}
+      - {x: -0.78, y: -0.17999999}
+      - {x: -0.89, y: -0.22}
+      - {x: -0.98999995, y: -0.28}
+      - {x: -1.12, y: -0.41}
+      - {x: -1.23, y: -0.55}
+      - {x: -1.43, y: -0.97999996}
+      - {x: -1.5, y: -1.2099999}
+      - {x: -1.51, y: -1.3299999}
+      - {x: -2.56, y: -2.3799999}
+      - {x: -2.56, y: -2.52}
+      - {x: -2.52, y: -2.56}
+      - {x: -2.3799999, y: -2.56}
+      - {x: -1.3299999, y: -1.51}
+      - {x: -1.31, y: -1.51}

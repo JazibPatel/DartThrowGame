@@ -1,45 +1,70 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class boardRotator : MonoBehaviour
 {
-    public float rotationSpeed = 100f;
-    private bool rotating = false;
-    private float targetAngle;
-    private float rotatedAngle;
-    private int direction;
+    public float baseSpeed = 120f;
+    private float rotationSpeed;
+    private int direction = 1; // 1 = CW, -1 = CCW
+    private float rotatedAngle = 0f;
 
-    void Update()
+    void Start()
     {
-
-        if (!rotating)
+        // Set rotation speed based on difficulty
+        if (SceneLoader.instance != null)
         {
-            StartNewRotation();
+            if (SceneLoader.instance.numOfPlayers == 2)
+            {
+                // Duo → Same as Medium
+                rotationSpeed = baseSpeed * 1.0f;
+            }
+            else
+            {
+                switch (SceneLoader.instance.difficulty)
+                {
+                    case "Easy": rotationSpeed = baseSpeed * 0.6f; break;
+                    case "Medium": rotationSpeed = baseSpeed * 1.0f; break;
+                    case "Hard": rotationSpeed = baseSpeed * 1.4f; break;
+                    default: rotationSpeed = baseSpeed; break;
+                }
+            }
         }
         else
         {
-            float rotationStep = direction * rotationSpeed * Time.deltaTime;
-            transform.Rotate(0f, 0f, rotationStep);
-            rotatedAngle += Mathf.Abs(rotationStep);
-
-            if (rotatedAngle >= targetAngle)
-            {
-                rotating = false;
-            }
+            rotationSpeed = baseSpeed; // fallback
         }
     }
 
-    void StartNewRotation()
+    void Update()
     {
-        // Choose a random angle (120, 180, or 360)
-        int[] angles = { 120, 180, 90 };
-        targetAngle = angles[Random.Range(0, angles.Length)];
+        float step = rotationSpeed * direction * Time.deltaTime;
+        transform.Rotate(0f, 0f, step);
+        rotatedAngle += Mathf.Abs(step);
 
-        // Randomly choose direction: 1 (clockwise), -1 (anticlockwise)
-        direction = Random.value > 0.5f ? 1 : -1;
+        // Once we rotate full 360° → reverse direction
+        if (rotatedAngle >= 360f)
+        {
+            rotatedAngle = 0f;
+            direction *= -1;
+        }
+    }
 
-        rotatedAngle = 0f;
-        rotating = true;
+    // Get the score value currently at top (Y-axis)
+    public int GetCurrentTopScore()
+    {
+        ScoreValueScript[] zones = GetComponentsInChildren<ScoreValueScript>();
+        ScoreValueScript topZone = null;
+        float highestY = float.MinValue;
+
+        foreach (var zone in zones)
+        {
+            Vector3 worldPos = zone.transform.position;
+            if (worldPos.y > highestY)
+            {
+                highestY = worldPos.y;
+                topZone = zone;
+            }
+        }
+
+        return (topZone != null) ? topZone.value : 0;
     }
 }

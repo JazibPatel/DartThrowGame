@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/1_2_Player/Scenes/Main.unity
+- path: Assets/DartThrow/scenes/dartThrow.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

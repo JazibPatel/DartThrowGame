@@ -179,33 +179,43 @@ public class dartScript : MonoBehaviour
         }
     }
 
-    // BOT THROW LOGIC
     private IEnumerator BotThrowRoutine()
     {
         string difficulty = scoreManager.instance.Difficulty;
-        float delay = 1.5f;
 
-        // Difficulty-based throw delay
+        // Allowed scores per difficulty
+        int[] targetScores;
         switch (difficulty)
         {
-            case "Easy": delay = Random.Range(1.5f, 2.5f); break;
-            case "Medium": delay = Random.Range(1.0f, 2.0f); break;
-            case "Hard": delay = Random.Range(0.5f, 1.2f); break;
+            case "Easy": targetScores = new int[] { 1, 2 }; break;
+            case "Medium": targetScores = new int[] { 2, 3 }; break;
+            default: targetScores = new int[] { 4, 5 }; break;
         }
 
-        yield return new WaitForSeconds(delay);
+        // Wait for board to rotate a bit before trying
+        yield return new WaitForSeconds(Random.Range(0.5f, 1.5f));
 
-        // Accuracy offset for Easy/Medium (misses sometimes)
-        Vector3 offset = Vector3.zero;
-        if (difficulty == "Easy")
-            offset = new Vector3(Random.Range(-0.3f, 0.3f), 0, 0);
-        else if (difficulty == "Medium")
-            offset = new Vector3(Random.Range(-0.15f, 0.15f), 0, 0);
+        boardRotator rotator = FindObjectOfType<boardRotator>();
 
-        transform.position += offset;
+        while (true)
+        {
+            int topScore = rotator.GetCurrentTopScore();
 
-        ThrowDart();
+            // If top score is allowed → throw straight
+            foreach (int s in targetScores)
+            {
+                if (topScore == s)
+                {
+                    ThrowDart();  // Straight throw
+                    yield break;
+                }
+            }
+
+            // Keep checking each frame
+            yield return null;
+        }
     }
+
 
     private void ThrowDart()
     {
