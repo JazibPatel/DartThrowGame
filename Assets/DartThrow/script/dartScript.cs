@@ -1,5 +1,4 @@
 ﻿//using System.Collections;
-//using System.Linq;
 //using UnityEngine;
 
 //public class dartScript : MonoBehaviour
@@ -16,7 +15,6 @@
 //    private bool turnProcessed = false;
 
 //    public AudioClip stickSound;
-
 //    private boardRotator rotator;
 
 //    private void Start()
@@ -64,29 +62,37 @@
 //        string difficulty = scoreManager.instance.Difficulty;
 
 //        int[] targetScores;
-//        switch (difficulty)
+//        switch (difficulty.ToLower())
 //        {
-//            case "Easy": targetScores = new int[] { 1, 2 }; break;
-//            case "Medium": targetScores = new int[] { 3 }; break;
-//            default: targetScores = new int[] { 5 }; break;
+//            case "easy":
+//                targetScores = new int[] { 2 };
+//                break;
+//            case "medium":
+//                targetScores = new int[] { 2, 3 };
+//                break;
+//            default:
+//                targetScores = new int[] { 1, 4, 5 };
+//                break;
 //        }
+
+//        // Adjust this value to fit your game's dart physics
+//        float dartTravelTime = 0.25f;
+
+//        // Degrees of tolerance around 'top' to consider a valid shot
+//        float aimTolerance = 10f;
 
 //        while (true)
 //        {
-//            int currentTopScore = rotator.GetCurrentTopScore();
-//            Debug.Log("Top Score Zone: " + currentTopScore);
+//            var (predictedScore, angleToTop) = rotator.ClosestZoneToTopAfter(dartTravelTime);
 
-//            if (System.Array.Exists(targetScores, score => score == currentTopScore))
+//            if (System.Array.Exists(targetScores, score => score == predictedScore) && angleToTop <= aimTolerance)
 //            {
-//                ThrowDart(false); // false = bot
+//                ThrowDart(false); // Bot throws
 //                yield break;
 //            }
-
-//            yield return null; // wait one frame and check again
+//            yield return null;
 //        }
 //    }
-
-
 
 //    private void ThrowDart(bool isBot = false)
 //    {
@@ -149,7 +155,7 @@
 
 //        AudioSource.PlayClipAtPoint(stickSound, transform.position);
 
-//        // Resume rotation after 0.5 sec
+//        // Resume board rotation and process next turn after delay
 //        Invoke(nameof(ResumeBoard), 0.5f);
 //        Invoke(nameof(ProcessNextTurn), 0.5f);
 //    }
@@ -175,7 +181,7 @@ using UnityEngine;
 
 public class dartScript : MonoBehaviour
 {
-    public float throwForce = 100f;
+    public float throwForce = 50f;
     public Rigidbody2D rb;
     public bool isThrown = false;
     private bool hasScored = false;
@@ -185,6 +191,8 @@ public class dartScript : MonoBehaviour
 
     private bool inputLocked = false;
     private bool turnProcessed = false;
+    private float throwCooldown = 0.3f; // Cooldown to prevent rapid throws
+    private float lastThrowTime = 0f;
 
     public AudioClip stickSound;
     private boardRotator rotator;
@@ -196,9 +204,8 @@ public class dartScript : MonoBehaviour
 
     private void Update()
     {
-        if (isThrown || inputLocked) return;
+        if (isThrown || inputLocked || Time.time < lastThrowTime + throwCooldown) return;
         if (scoreManager.instance == null) return;
-        if (scoreManager.instance.currentPlayer != playerNumber) return;
 
         bool isSoloMode = scoreManager.instance.IsSoloMode;
         Vector3 mousePos = Input.mousePosition;
@@ -208,6 +215,7 @@ public class dartScript : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && mousePos.y <= Screen.height * 0.5f)
             {
                 inputLocked = true;
+                lastThrowTime = Time.time;
                 ThrowDart();
             }
         }
@@ -223,6 +231,7 @@ public class dartScript : MonoBehaviour
                 if (Input.GetMouseButtonDown(0) && mousePos.y > Screen.height * 0.5f)
                 {
                     inputLocked = true;
+                    lastThrowTime = Time.time;
                     ThrowDart();
                 }
             }
@@ -232,38 +241,62 @@ public class dartScript : MonoBehaviour
     private IEnumerator BotThrowRoutine()
     {
         string difficulty = scoreManager.instance.Difficulty;
+        int winOrLose = scoreManager.instance.WinOrLose; // Access the WinOrLose value
 
         int[] targetScores;
-        switch (difficulty.ToLower())
+
+        // Adjust targets based on win/lose and difficulty
+        if (winOrLose == 1) // Bot aims to win: target higher scores
         {
-            case "easy":
-                targetScores = new int[] { 2 };
-                break;
-            case "medium":
-                targetScores = new int[] { 2, 3 };
-                break;
-            default:
-                targetScores = new int[] { 1, 4, 5 };
-                break;
+            switch (difficulty.ToLower())
+            {
+                case "easy":
+                    targetScores = new int[] { 2 , 3 }; // Moderate-high for easy win
+                    break;
+                case "medium":
+                    targetScores = new int[] { 3 , 4 }; // High for medium win
+                    break;
+                default: // hard
+                    targetScores = new int[] { 2 ,3, 4, 5 }; // Only best for hard win
+                    break;
+            }
+        }
+        else // winOrLose == 0: Bot aims to lose: target lower scores
+        {
+            switch (difficulty.ToLower())
+            {
+                case "easy":
+                    targetScores = new int[] { 1 }; // Very low for easy lose
+                    break;
+                case "medium":
+                    targetScores = new int[] { 1, 2 }; // Low for medium lose
+                    break;
+                default: // hard
+                    targetScores = new int[] { 1, 2}; // Mid-low for hard lose (still challenging)
+                    break;
+            }
         }
 
-        // Adjust this value to fit your game's dart physics
-        float dartTravelTime = 0.25f;
-
-        // Degrees of tolerance around 'top' to consider a valid shot
+        float dartTravelTime = 2f;
         float aimTolerance = 10f;
+        float maxWaitTime = 5f; // Prevent bot from getting stuck
+        float startTime = Time.time;
 
-        while (true)
+        while (Time.time < startTime + maxWaitTime)
         {
             var (predictedScore, angleToTop) = rotator.ClosestZoneToTopAfter(dartTravelTime);
 
             if (System.Array.Exists(targetScores, score => score == predictedScore) && angleToTop <= aimTolerance)
             {
-                ThrowDart(false); // Bot throws
+                ThrowDart(true); // Bot throws
                 yield break;
             }
             yield return null;
         }
+
+        // Fallback: Throw if no ideal condition is met
+        ThrowDart(true);
+        yield break;
     }
 
     private void ThrowDart(bool isBot = false)
@@ -277,8 +310,28 @@ public class dartScript : MonoBehaviour
         rb.angularVelocity = 0;
         rb.AddForce(throwDirection * throwForce, ForceMode2D.Impulse);
 
-        scoreManager.instance.RegisterThrow(playerNumber);
-        scoreManager.instance.spawner.UpdateQueue(playerNumber);
+        // NEW: Fallback for miss (if no collision after 2s, complete turn with 0 score)
+        Invoke(nameof(ForceProcessNextTurn), 2f);
+    }
+
+    // NEW: Fallback method for misses
+    private void ForceProcessNextTurn()
+    {
+        if (!hasScored && !isStuck)
+        {
+            hasScored = true; // Mark as scored (0 points)
+            ProcessNextTurn();
+        }
+    }
+
+    private void ProcessNextTurn()
+    {
+        if (!turnProcessed)
+        {
+            turnProcessed = true;
+            inputLocked = false;
+            scoreManager.instance.RegisterCompletedThrow(playerNumber); // NEW: Call completion here
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -327,7 +380,6 @@ public class dartScript : MonoBehaviour
 
         AudioSource.PlayClipAtPoint(stickSound, transform.position);
 
-        // Resume board rotation and process next turn after delay
         Invoke(nameof(ResumeBoard), 0.5f);
         Invoke(nameof(ProcessNextTurn), 0.5f);
     }
@@ -336,14 +388,5 @@ public class dartScript : MonoBehaviour
     {
         if (rotator != null)
             rotator.enabled = true;
-    }
-
-    private void ProcessNextTurn()
-    {
-        if (!turnProcessed)
-        {
-            turnProcessed = true;
-            scoreManager.instance.NextTurn();
-        }
     }
 }

@@ -69,4 +69,3 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene("Main"); // Load Main scene fresh
     }
 }
-

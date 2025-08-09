@@ -13,12 +13,12 @@ public class sceneManager : MonoBehaviour
 
     public void loadDartThrow()
     {
-        
-            SceneManager.LoadScene("dartThrowScene");
-       
+
+        SceneManager.LoadScene("dartThrowScene");
+
     }
     public void backBtn()
     {
-        SceneManager.LoadScene("Main"); 
+        SceneManager.LoadScene("Main");
     }
 }

@@ -185,4 +185,3 @@ public class boardRotator : MonoBehaviour
         return (bestValue, minAngle);
     }
 }
-

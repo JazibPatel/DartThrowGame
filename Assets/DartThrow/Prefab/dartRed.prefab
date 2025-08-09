@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc8c6aecb63f37147bfb049da84ed9cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwForce: 100
+  throwForce: 50
   rb: {fileID: 3101535918105189985}
   isThrown: 0
   playerNumber: 1
