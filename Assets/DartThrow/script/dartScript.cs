@@ -1,0 +1,216 @@
+﻿using System.Collections;
+using UnityEngine;
+
+public class dartScript : MonoBehaviour
+{
+    public float throwForce = 50f;
+    public Rigidbody2D rb;
+    public bool isThrown = false;
+    private bool hasScored = false;
+    private bool isStuck = false;
+    public int playerNumber = 1;
+    public GameObject hitEffect;
+
+    private bool inputLocked = false;
+    private bool turnProcessed = false;
+    private float throwCooldown = 0.3f; // Cooldown to prevent rapid throws
+    private float lastThrowTime = 0f;
+
+    public AudioClip stickSound;
+    private boardRotator rotator;
+
+    private void Start()
+    {
+        rotator = FindObjectOfType<boardRotator>();
+    }
+
+    private void Update()
+    {
+        if (isThrown || inputLocked || Time.time < lastThrowTime + throwCooldown) return;
+        if (scoreManager.instance == null) return;
+
+        bool isSoloMode = scoreManager.instance.IsSoloMode;
+        Vector3 mousePos = Input.mousePosition;
+
+        if (playerNumber == 1)
+        {
+            if (Input.GetMouseButtonDown(0) && mousePos.y <= Screen.height * 0.5f)
+            {
+                inputLocked = true;
+                lastThrowTime = Time.time;
+                ThrowDart();
+            }
+        }
+        else
+        {
+            if (isSoloMode)
+            {
+                inputLocked = true;
+                StartCoroutine(BotThrowRoutine());
+            }
+            else
+            {
+                if (Input.GetMouseButtonDown(0) && mousePos.y > Screen.height * 0.5f)
+                {
+                    inputLocked = true;
+                    lastThrowTime = Time.time;
+                    ThrowDart();
+                }
+            }
+        }
+    }
+
+    private IEnumerator BotThrowRoutine()
+    {
+        string difficulty = scoreManager.instance.Difficulty;
+        int winOrLose = scoreManager.instance.GetWinOrLose(); // Now fetched dynamically each turn
+        Debug.Log("winorlose = " + winOrLose);
+
+        int[] targetScores;
+
+        if (winOrLose == 1) // Bot aims to win
+        {
+            switch (difficulty.ToLower())
+            {
+                case "easy":
+                    targetScores = new int[] { 1,2 }; // Slight win
+                    break;
+                case "medium":
+                    targetScores = new int[] { 2, 3 }; // Moderate win
+                    break;
+                default: // hard
+                    targetScores = new int[] { 4, 5 }; // Strong win
+                    break;
+            }
+        }
+        else // Bot aims to lose
+        {
+            switch (difficulty.ToLower())
+            {
+                case "easy":
+                    targetScores = new int[] { 1 }; // Always bad score
+                    break;
+                case "medium":
+                    targetScores = new int[] { 2 }; // Lower medium score
+                    break;
+                default: // hard
+                    targetScores = new int[] { 4 }; // Lower hard score
+                    break;
+            }
+        }
+
+        float dartTravelTime = 2f;
+        float aimTolerance = 10f;
+        float maxWaitTime = 5f;
+        float startTime = Time.time;
+
+        while (Time.time < startTime + maxWaitTime)
+        {
+            var (predictedScore, angleToTop) = rotator.ClosestZoneToTopAfter(dartTravelTime);
+
+            if (System.Array.Exists(targetScores, score => score == predictedScore) && angleToTop <= aimTolerance)
+            {
+                ThrowDart(true);
+                yield break;
+            }
+            yield return null;
+        }
+
+        // If no perfect timing found, just throw anyway
+        ThrowDart(true);
+    }
+
+
+
+
+    private void ThrowDart(bool isBot = false)
+    {
+        if (isThrown) return;
+
+        isThrown = true;
+
+        Vector2 throwDirection = (playerNumber == 1) ? Vector2.up : Vector2.down;
+        rb.velocity = Vector2.zero;
+        rb.angularVelocity = 0;
+        rb.AddForce(throwDirection * throwForce, ForceMode2D.Impulse);
+
+        // NEW: Fallback for miss (if no collision after 2s, complete turn with 0 score)
+        Invoke(nameof(ForceProcessNextTurn), 2f);
+    }
+
+    // NEW: Fallback method for misses
+    private void ForceProcessNextTurn()
+    {
+        if (!hasScored && !isStuck)
+        {
+            hasScored = true; // Mark as scored (0 points)
+            ProcessNextTurn();
+        }
+    }
+
+    private void ProcessNextTurn()
+    {
+        if (!turnProcessed)
+        {
+            turnProcessed = true;
+            inputLocked = false;
+            scoreManager.instance.RegisterCompletedThrow(playerNumber); // NEW: Call completion here
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("dart"))
+        {
+            dartScript otherDart = collision.GetComponent<dartScript>();
+            if (otherDart != null && otherDart.isStuck)
+            {
+                if (hitEffect != null)
+                    Instantiate(hitEffect, transform.position, Quaternion.identity);
+
+                hasScored = true;
+                ProcessNextTurn();
+                Destroy(gameObject, 0.1f);
+                return;
+            }
+        }
+
+        if (!hasScored)
+        {
+            ScoreValueScript scorePart = collision.GetComponent<ScoreValueScript>();
+            if (scorePart != null)
+            {
+                hasScored = true;
+                scoreManager.instance.AddScore(playerNumber, scorePart.value);
+            }
+        }
+
+        if (collision.CompareTag("dartBoard"))
+        {
+            StickDart(collision.transform);
+        }
+    }
+
+    private void StickDart(Transform parent)
+    {
+        isThrown = false;
+        isStuck = true;
+
+        rb.velocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        rb.isKinematic = true;
+
+        transform.SetParent(parent);
+
+        AudioSource.PlayClipAtPoint(stickSound, transform.position);
+
+        Invoke(nameof(ResumeBoard), 0.5f);
+        Invoke(nameof(ProcessNextTurn), 0.5f);
+    }
+
+    private void ResumeBoard()
+    {
+        if (rotator != null)
+            rotator.enabled = true;
+    }
+}
