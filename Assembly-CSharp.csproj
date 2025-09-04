@@ -102,6 +102,13 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\DartThrow\script\dartScript.cs" />
+    <Compile Include="Assets\endlessRunner\Scripts\Bluetruck.cs" />
+    <Compile Include="Assets\endlessRunner\Scripts\TreeScroller.cs" />
+    <Compile Include="Assets\endlessRunner\Scripts\Redtruck.cs" />
+    <Compile Include="Assets\endlessRunner\Scripts\roadBarrier.cs" />
+    <Compile Include="Assets\endlessRunner\Scripts\PlayerManager.cs" />
+    <Compile Include="Assets\endlessRunner\Scripts\checkPoint.cs" />
+    <Compile Include="Assets\endlessRunner\Scripts\road.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

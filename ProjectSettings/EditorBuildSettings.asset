@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/DartThrow/scenes/WinnerScene.unity
     guid: 6f53a79d3cc656645888c4d22e1ab391
+  - enabled: 1
+    path: Assets/endlessRunner/Scenes/monsterTruckRace.unity
+    guid: 2c2c57a84ac56964f9ff54de097eeec6
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
