@@ -9,7 +9,11 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
+<<<<<<< HEAD
     <ProjectGuid>{97980440-1FF4-B95D-7BAE-ACD5FF8D1E80}</ProjectGuid>
+=======
+    <ProjectGuid>{7C97F2CD-D083-EA90-4502-57AA574C529F}</ProjectGuid>
+>>>>>>> 809d5065289469830f2b575a3eca940340a9340d
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -102,6 +106,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\DartThrow\script\dartScript.cs" />
+<<<<<<< HEAD
     <Compile Include="Assets\endlessRunner\Scripts\Bluetruck.cs" />
     <Compile Include="Assets\endlessRunner\Scripts\TreeScroller.cs" />
     <Compile Include="Assets\endlessRunner\Scripts\Redtruck.cs" />
@@ -109,6 +114,8 @@
     <Compile Include="Assets\endlessRunner\Scripts\PlayerManager.cs" />
     <Compile Include="Assets\endlessRunner\Scripts\checkPoint.cs" />
     <Compile Include="Assets\endlessRunner\Scripts\road.cs" />
+=======
+>>>>>>> 809d5065289469830f2b575a3eca940340a9340d
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -692,6 +699,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Unity.Timeline.Player.csproj">
+<<<<<<< HEAD
       <Project>{4894023F-FC07-C831-1F77-5A6484146A67}</Project>
       <Name>Unity.Timeline.Player</Name>
     </ProjectReference>
@@ -701,6 +709,17 @@
     </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.Player.csproj">
       <Project>{3F5BFDF3-CBB5-04D3-99C8-353CC9C07290}</Project>
+=======
+      <Project>{F9567845-5167-CA92-F74F-2DEC9982B7C9}</Project>
+      <Name>Unity.Timeline.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.TextMeshPro.Player.csproj">
+      <Project>{705EF1CF-BC54-FD2D-5F1F-765CC815D1D3}</Project>
+      <Name>Unity.TextMeshPro.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="UnityEngine.UI.Player.csproj">
+      <Project>{3901E5AE-B9F4-1038-8F76-9650A985F600}</Project>
+>>>>>>> 809d5065289469830f2b575a3eca940340a9340d
       <Name>UnityEngine.UI.Player</Name>
     </ProjectReference>
   </ItemGroup>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿//using System.Collections;
 //using UnityEngine;
 
@@ -177,6 +178,9 @@
 //}
 
 using System.Collections;
+=======
+﻿using System.Collections;
+>>>>>>> 809d5065289469830f2b575a3eca940340a9340d
 using UnityEngine;
 
 public class dartScript : MonoBehaviour
@@ -241,16 +245,26 @@ public class dartScript : MonoBehaviour
     private IEnumerator BotThrowRoutine()
     {
         string difficulty = scoreManager.instance.Difficulty;
+<<<<<<< HEAD
         int winOrLose = scoreManager.instance.WinOrLose; // Access the WinOrLose value
 
         int[] targetScores;
 
         // Adjust targets based on win/lose and difficulty
         if (winOrLose == 1) // Bot aims to win: target higher scores
+=======
+        int winOrLose = scoreManager.instance.GetWinOrLose(); // Now fetched dynamically each turn
+        Debug.Log("winorlose = " + winOrLose);
+
+        int[] targetScores;
+
+        if (winOrLose == 1) // Bot aims to win
+>>>>>>> 809d5065289469830f2b575a3eca940340a9340d
         {
             switch (difficulty.ToLower())
             {
                 case "easy":
+<<<<<<< HEAD
                     targetScores = new int[] { 2 , 3 }; // Moderate-high for easy win
                     break;
                 case "medium":
@@ -262,10 +276,24 @@ public class dartScript : MonoBehaviour
             }
         }
         else // winOrLose == 0: Bot aims to lose: target lower scores
+=======
+                    targetScores = new int[] { 1,2 }; // Slight win
+                    break;
+                case "medium":
+                    targetScores = new int[] { 2, 3 }; // Moderate win
+                    break;
+                default: // hard
+                    targetScores = new int[] { 4, 5 }; // Strong win
+                    break;
+            }
+        }
+        else // Bot aims to lose
+>>>>>>> 809d5065289469830f2b575a3eca940340a9340d
         {
             switch (difficulty.ToLower())
             {
                 case "easy":
+<<<<<<< HEAD
                     targetScores = new int[] { 1 }; // Very low for easy lose
                     break;
                 case "medium":
@@ -273,13 +301,26 @@ public class dartScript : MonoBehaviour
                     break;
                 default: // hard
                     targetScores = new int[] { 1, 2}; // Mid-low for hard lose (still challenging)
+=======
+                    targetScores = new int[] { 1 }; // Always bad score
+                    break;
+                case "medium":
+                    targetScores = new int[] { 2 }; // Lower medium score
+                    break;
+                default: // hard
+                    targetScores = new int[] { 4 }; // Lower hard score
+>>>>>>> 809d5065289469830f2b575a3eca940340a9340d
                     break;
             }
         }
 
         float dartTravelTime = 2f;
         float aimTolerance = 10f;
+<<<<<<< HEAD
         float maxWaitTime = 5f; // Prevent bot from getting stuck
+=======
+        float maxWaitTime = 5f;
+>>>>>>> 809d5065289469830f2b575a3eca940340a9340d
         float startTime = Time.time;
 
         while (Time.time < startTime + maxWaitTime)
@@ -288,17 +329,31 @@ public class dartScript : MonoBehaviour
 
             if (System.Array.Exists(targetScores, score => score == predictedScore) && angleToTop <= aimTolerance)
             {
+<<<<<<< HEAD
                 ThrowDart(true); // Bot throws
+=======
+                ThrowDart(true);
+>>>>>>> 809d5065289469830f2b575a3eca940340a9340d
                 yield break;
             }
             yield return null;
         }
 
+<<<<<<< HEAD
         // Fallback: Throw if no ideal condition is met
         ThrowDart(true);
         yield break;
     }
 
+=======
+        // If no perfect timing found, just throw anyway
+        ThrowDart(true);
+    }
+
+
+
+
+>>>>>>> 809d5065289469830f2b575a3eca940340a9340d
     private void ThrowDart(bool isBot = false)
     {
         if (isThrown) return;

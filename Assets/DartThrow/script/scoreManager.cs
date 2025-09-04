@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿//using TMPro;
 //using UnityEngine;
 //using UnityEngine.SceneManagement;
@@ -120,6 +121,9 @@
 
 
 using TMPro;
+=======
+﻿using TMPro;
+>>>>>>> 809d5065289469830f2b575a3eca940340a9340d
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -148,10 +152,17 @@ public class scoreManager : MonoBehaviour
     private bool isSoloMode;
     private string difficulty;
 
+<<<<<<< HEAD
     private int[] easyArr = { 0, 1, 1, 0, 1, 0, 1, 0, 1, 0 };
     private int[] mediumArr = { 1, 1, 1, 0, 1, 0, 0, 1, 0, 1 };
     private int[] hardArr = { 1, 1, 1, 0, 1, 1, 1, 0, 1, 1 };
     public int WinOrLose;
+=======
+    // Arrays controlling bot win/lose bias
+    private int[] easyArr = { 0, 1, 1, 0, 1, 0, 1, 0, 1, 0 };
+    private int[] mediumArr = { 1, 1, 1, 0, 1, 0, 0, 1, 0, 1 };
+    private int[] hardArr = { 1, 1, 1, 0, 1, 1, 1, 0, 1, 1 };
+>>>>>>> 809d5065289469830f2b575a3eca940340a9340d
 
     void Awake()
     {
@@ -169,6 +180,7 @@ public class scoreManager : MonoBehaviour
 
         Debug.Log($"Mode: {(isSoloMode ? "Solo" : "Duo")} | Difficulty: {difficulty}");
 
+<<<<<<< HEAD
         if (isSoloMode)
         {
             int[] difficultyArr = new int[10];
@@ -188,12 +200,41 @@ public class scoreManager : MonoBehaviour
             Debug.Log($"Bot WinOrLose: {WinOrLose}"); // For testing
         }
 
+=======
+>>>>>>> 809d5065289469830f2b575a3eca940340a9340d
         // Spawn initial darts for both players
         spawner.SpawnDart(1);
         spawner.SpawnDart(2); // Always spawn blue dart, even in solo mode
     }
 
+<<<<<<< HEAD
     // Public getters for dartScript
+=======
+    // Called by dartScript to decide bot's goal for *this turn*
+    public int GetWinOrLose()
+    {
+        if (!isSoloMode) return 0; // No bot logic in multiplayer
+
+        int[] difficultyArr;
+        switch (difficulty.ToLower())
+        {
+            case "easy":
+                difficultyArr = easyArr;
+                break;
+            case "medium":
+                difficultyArr = mediumArr;
+                break;
+            default:
+                difficultyArr = hardArr;
+                break;
+        }
+
+        int result = difficultyArr[Random.Range(0, difficultyArr.Length)];
+        Debug.Log($"[scoreManager] Bot WinOrLose this turn = {result}");
+        return result; // 1 = bot aims to win, 0 = bot aims to lose
+    }
+
+>>>>>>> 809d5065289469830f2b575a3eca940340a9340d
     public bool IsSoloMode => isSoloMode;
     public string Difficulty => difficulty;
 
@@ -218,12 +259,20 @@ public class scoreManager : MonoBehaviour
         if (playerNumber == 1)
         {
             redDartsThrown++;
+<<<<<<< HEAD
             spawner.UpdateQueue(playerNumber); // Spawn next
+=======
+            spawner.UpdateQueue(playerNumber);
+>>>>>>> 809d5065289469830f2b575a3eca940340a9340d
         }
         else
         {
             blueDartsThrown++;
+<<<<<<< HEAD
             spawner.UpdateQueue(playerNumber); // Spawn next
+=======
+            spawner.UpdateQueue(playerNumber);
+>>>>>>> 809d5065289469830f2b575a3eca940340a9340d
         }
 
         if (!gameOver && redDartsThrown >= maxDarts && blueDartsThrown >= maxDarts)

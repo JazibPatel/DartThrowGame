@@ -12,8 +12,13 @@ GameObject:
   - component: {fileID: 3101535918105189997}
   - component: {fileID: 3101535918105189985}
   - component: {fileID: 3101535918105189986}
+<<<<<<< HEAD
   - component: {fileID: 8742764869253272477}
   - component: {fileID: 6307256350391208675}
+=======
+  - component: {fileID: 6438195268645809270}
+  - component: {fileID: 8742764869253272477}
+>>>>>>> 809d5065289469830f2b575a3eca940340a9340d
   m_Layer: 0
   m_Name: dartRed
   m_TagString: dart
@@ -133,6 +138,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.12, y: 5.12}
   m_EdgeRadius: 0
+<<<<<<< HEAD
+=======
+--- !u!114 &6438195268645809270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3101535918105189998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc8c6aecb63f37147bfb049da84ed9cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  throwForce: 50
+  rb: {fileID: 3101535918105189985}
+  isThrown: 0
+  playerNumber: 1
+  hitEffect: {fileID: 5671074258377530418, guid: d6932455ee33cb048aba53c4b9a0bd00, type: 3}
+  stickSound: {fileID: 8300000, guid: 9c99f4a6cf9c9324481ffce3ffbe1b0f, type: 3}
+>>>>>>> 809d5065289469830f2b575a3eca940340a9340d
 --- !u!60 &8742764869253272477
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -221,6 +247,7 @@ PolygonCollider2D:
       - {x: -2.37, y: -2.55}
       - {x: -1.3199999, y: -1.51}
       - {x: -1.26, y: -1.5}
+<<<<<<< HEAD
 --- !u!114 &6307256350391208675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,3 +266,5 @@ MonoBehaviour:
   playerNumber: 1
   hitEffect: {fileID: 5671074258377530418, guid: d6932455ee33cb048aba53c4b9a0bd00, type: 3}
   stickSound: {fileID: 8300000, guid: 9c99f4a6cf9c9324481ffce3ffbe1b0f, type: 3}
+=======
+>>>>>>> 809d5065289469830f2b575a3eca940340a9340d
