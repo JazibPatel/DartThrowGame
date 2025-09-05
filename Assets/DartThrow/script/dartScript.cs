@@ -1,186 +1,4 @@
-<<<<<<< HEAD
-﻿//using System.Collections;
-//using UnityEngine;
-
-//public class dartScript : MonoBehaviour
-//{
-//    public float throwForce = 100f;
-//    public Rigidbody2D rb;
-//    public bool isThrown = false;
-//    private bool hasScored = false;
-//    private bool isStuck = false;
-//    public int playerNumber = 1;
-//    public GameObject hitEffect;
-
-//    private bool inputLocked = false;
-//    private bool turnProcessed = false;
-
-//    public AudioClip stickSound;
-//    private boardRotator rotator;
-
-//    private void Start()
-//    {
-//        rotator = FindObjectOfType<boardRotator>();
-//    }
-
-//    private void Update()
-//    {
-//        if (isThrown || inputLocked) return;
-//        if (scoreManager.instance == null) return;
-//        if (scoreManager.instance.currentPlayer != playerNumber) return;
-
-//        bool isSoloMode = scoreManager.instance.IsSoloMode;
-//        Vector3 mousePos = Input.mousePosition;
-
-//        if (playerNumber == 1)
-//        {
-//            if (Input.GetMouseButtonDown(0) && mousePos.y <= Screen.height * 0.5f)
-//            {
-//                inputLocked = true;
-//                ThrowDart();
-//            }
-//        }
-//        else
-//        {
-//            if (isSoloMode)
-//            {
-//                inputLocked = true;
-//                StartCoroutine(BotThrowRoutine());
-//            }
-//            else
-//            {
-//                if (Input.GetMouseButtonDown(0) && mousePos.y > Screen.height * 0.5f)
-//                {
-//                    inputLocked = true;
-//                    ThrowDart();
-//                }
-//            }
-//        }
-//    }
-
-//    private IEnumerator BotThrowRoutine()
-//    {
-//        string difficulty = scoreManager.instance.Difficulty;
-
-//        int[] targetScores;
-//        switch (difficulty.ToLower())
-//        {
-//            case "easy":
-//                targetScores = new int[] { 2 };
-//                break;
-//            case "medium":
-//                targetScores = new int[] { 2, 3 };
-//                break;
-//            default:
-//                targetScores = new int[] { 1, 4, 5 };
-//                break;
-//        }
-
-//        // Adjust this value to fit your game's dart physics
-//        float dartTravelTime = 0.25f;
-
-//        // Degrees of tolerance around 'top' to consider a valid shot
-//        float aimTolerance = 10f;
-
-//        while (true)
-//        {
-//            var (predictedScore, angleToTop) = rotator.ClosestZoneToTopAfter(dartTravelTime);
-
-//            if (System.Array.Exists(targetScores, score => score == predictedScore) && angleToTop <= aimTolerance)
-//            {
-//                ThrowDart(false); // Bot throws
-//                yield break;
-//            }
-//            yield return null;
-//        }
-//    }
-
-//    private void ThrowDart(bool isBot = false)
-//    {
-//        if (isThrown) return;
-
-//        isThrown = true;
-
-//        Vector2 throwDirection = (playerNumber == 1) ? Vector2.up : Vector2.down;
-//        rb.velocity = Vector2.zero;
-//        rb.angularVelocity = 0;
-//        rb.AddForce(throwDirection * throwForce, ForceMode2D.Impulse);
-
-//        scoreManager.instance.RegisterThrow(playerNumber);
-//        scoreManager.instance.spawner.UpdateQueue(playerNumber);
-//    }
-
-//    private void OnTriggerEnter2D(Collider2D collision)
-//    {
-//        if (collision.CompareTag("dart"))
-//        {
-//            dartScript otherDart = collision.GetComponent<dartScript>();
-//            if (otherDart != null && otherDart.isStuck)
-//            {
-//                if (hitEffect != null)
-//                    Instantiate(hitEffect, transform.position, Quaternion.identity);
-
-//                hasScored = true;
-//                ProcessNextTurn();
-//                Destroy(gameObject, 0.1f);
-//                return;
-//            }
-//        }
-
-//        if (!hasScored)
-//        {
-//            ScoreValueScript scorePart = collision.GetComponent<ScoreValueScript>();
-//            if (scorePart != null)
-//            {
-//                hasScored = true;
-//                scoreManager.instance.AddScore(playerNumber, scorePart.value);
-//            }
-//        }
-
-//        if (collision.CompareTag("dartBoard"))
-//        {
-//            StickDart(collision.transform);
-//        }
-//    }
-
-//    private void StickDart(Transform parent)
-//    {
-//        isThrown = false;
-//        isStuck = true;
-
-//        rb.velocity = Vector2.zero;
-//        rb.angularVelocity = 0f;
-//        rb.isKinematic = true;
-
-//        transform.SetParent(parent);
-
-//        AudioSource.PlayClipAtPoint(stickSound, transform.position);
-
-//        // Resume board rotation and process next turn after delay
-//        Invoke(nameof(ResumeBoard), 0.5f);
-//        Invoke(nameof(ProcessNextTurn), 0.5f);
-//    }
-
-//    private void ResumeBoard()
-//    {
-//        if (rotator != null)
-//            rotator.enabled = true;
-//    }
-
-//    private void ProcessNextTurn()
-//    {
-//        if (!turnProcessed)
-//        {
-//            turnProcessed = true;
-//            scoreManager.instance.NextTurn();
-//        }
-//    }
-//}
-
 using System.Collections;
-=======
-﻿using System.Collections;
->>>>>>> 809d5065289469830f2b575a3eca940340a9340d
 using UnityEngine;
 
 public class dartScript : MonoBehaviour
@@ -208,8 +26,10 @@ public class dartScript : MonoBehaviour
 
     private void Update()
     {
-        if (isThrown || inputLocked || Time.time < lastThrowTime + throwCooldown) return;
-        if (scoreManager.instance == null) return;
+        if (isThrown || inputLocked || Time.time < lastThrowTime + throwCooldown)
+            return;
+        if (scoreManager.instance == null)
+            return;
 
         bool isSoloMode = scoreManager.instance.IsSoloMode;
         Vector3 mousePos = Input.mousePosition;
@@ -245,118 +65,75 @@ public class dartScript : MonoBehaviour
     private IEnumerator BotThrowRoutine()
     {
         string difficulty = scoreManager.instance.Difficulty;
-<<<<<<< HEAD
         int winOrLose = scoreManager.instance.WinOrLose; // Access the WinOrLose value
 
         int[] targetScores;
 
-        // Adjust targets based on win/lose and difficulty
-        if (winOrLose == 1) // Bot aims to win: target higher scores
-=======
-        int winOrLose = scoreManager.instance.GetWinOrLose(); // Now fetched dynamically each turn
-        Debug.Log("winorlose = " + winOrLose);
-
-        int[] targetScores;
-
         if (winOrLose == 1) // Bot aims to win
->>>>>>> 809d5065289469830f2b575a3eca940340a9340d
         {
             switch (difficulty.ToLower())
             {
                 case "easy":
-<<<<<<< HEAD
-                    targetScores = new int[] { 2 , 3 }; // Moderate-high for easy win
+
+                    targetScores = new int[] { 2, 3 }; // Moderate-high for easy win
                     break;
                 case "medium":
-                    targetScores = new int[] { 3 , 4 }; // High for medium win
+                    targetScores = new int[] { 3, 4 }; // High for medium win
                     break;
                 default: // hard
-                    targetScores = new int[] { 2 ,3, 4, 5 }; // Only best for hard win
-                    break;
-            }
-        }
-        else // winOrLose == 0: Bot aims to lose: target lower scores
-=======
-                    targetScores = new int[] { 1,2 }; // Slight win
-                    break;
-                case "medium":
-                    targetScores = new int[] { 2, 3 }; // Moderate win
-                    break;
-                default: // hard
-                    targetScores = new int[] { 4, 5 }; // Strong win
+                    targetScores = new int[] { 2, 3, 4, 5 }; // Only best for hard win
                     break;
             }
         }
         else // Bot aims to lose
->>>>>>> 809d5065289469830f2b575a3eca940340a9340d
         {
             switch (difficulty.ToLower())
             {
                 case "easy":
-<<<<<<< HEAD
+
                     targetScores = new int[] { 1 }; // Very low for easy lose
                     break;
                 case "medium":
                     targetScores = new int[] { 1, 2 }; // Low for medium lose
                     break;
                 default: // hard
-                    targetScores = new int[] { 1, 2}; // Mid-low for hard lose (still challenging)
-=======
-                    targetScores = new int[] { 1 }; // Always bad score
-                    break;
-                case "medium":
-                    targetScores = new int[] { 2 }; // Lower medium score
-                    break;
-                default: // hard
-                    targetScores = new int[] { 4 }; // Lower hard score
->>>>>>> 809d5065289469830f2b575a3eca940340a9340d
+                    targetScores = new int[] { 1, 2 }; // Mid-low for hard lose (still challenging)
                     break;
             }
         }
 
         float dartTravelTime = 2f;
         float aimTolerance = 10f;
-<<<<<<< HEAD
+
         float maxWaitTime = 5f; // Prevent bot from getting stuck
-=======
-        float maxWaitTime = 5f;
->>>>>>> 809d5065289469830f2b575a3eca940340a9340d
+
         float startTime = Time.time;
 
         while (Time.time < startTime + maxWaitTime)
         {
             var (predictedScore, angleToTop) = rotator.ClosestZoneToTopAfter(dartTravelTime);
 
-            if (System.Array.Exists(targetScores, score => score == predictedScore) && angleToTop <= aimTolerance)
+            if (
+                System.Array.Exists(targetScores, score => score == predictedScore)
+                && angleToTop <= aimTolerance
+            )
             {
-<<<<<<< HEAD
                 ThrowDart(true); // Bot throws
-=======
-                ThrowDart(true);
->>>>>>> 809d5065289469830f2b575a3eca940340a9340d
+
                 yield break;
             }
             yield return null;
         }
 
-<<<<<<< HEAD
         // Fallback: Throw if no ideal condition is met
         ThrowDart(true);
         yield break;
     }
 
-=======
-        // If no perfect timing found, just throw anyway
-        ThrowDart(true);
-    }
-
-
-
-
->>>>>>> 809d5065289469830f2b575a3eca940340a9340d
     private void ThrowDart(bool isBot = false)
     {
-        if (isThrown) return;
+        if (isThrown)
+            return;
 
         isThrown = true;
 
