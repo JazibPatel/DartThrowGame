@@ -19,9 +19,9 @@ MonoBehaviour:
     width: 1280
     height: 629.3334
   m_ShowMode: 4
-  m_Title: Inspector
+  m_Title: Project
   m_RootView: {fileID: 6}
-  m_MinSize: {x: 875, y: 542}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
@@ -43,8 +43,8 @@ MonoBehaviour:
     y: 366.66666
     width: 276
     height: 212.66666
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
@@ -71,10 +71,10 @@ MonoBehaviour:
     y: 0
     width: 276
     height: 579.3333
-  m_MinSize: {x: 276, y: 171}
-  m_MaxSize: {x: 4001, y: 8021}
+  m_MinSize: {x: 276, y: 192}
+  m_MaxSize: {x: 4001, y: 8042}
   vertical: 1
-  controlID: 254
+  controlID: 117
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -148,7 +148,7 @@ MonoBehaviour:
     y: 0
     width: 1280
     height: 629.3333
-  m_MinSize: {x: 875, y: 542}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_UseTopView: 1
   m_TopViewHeight: 30
@@ -221,10 +221,10 @@ MonoBehaviour:
     y: 30
     width: 1280
     height: 579.3333
-  m_MinSize: {x: 909, y: 492}
-  m_MaxSize: {x: 22004, y: 14042}
+  m_MinSize: {x: 911, y: 492}
+  m_MaxSize: {x: 22006, y: 14042}
   vertical: 0
-  controlID: 253
+  controlID: 116
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -247,10 +247,10 @@ MonoBehaviour:
     y: 0
     width: 1004
     height: 579.3333
-  m_MinSize: {x: 633, y: 492}
-  m_MaxSize: {x: 18003, y: 14042}
+  m_MinSize: {x: 635, y: 492}
+  m_MaxSize: {x: 18005, y: 14042}
   vertical: 0
-  controlID: 95
+  controlID: 94
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -322,8 +322,8 @@ MonoBehaviour:
     y: 0
     width: 410.6667
     height: 579.3333
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -393,7 +393,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/endlessRunner/Scenes
+    - Assets/endlessRunner
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 0
@@ -407,7 +407,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 3a3d0000
     m_LastClickedID: 15674
-    m_ExpandedIDs: 00000000e6420000e8420000ea420000ec420000ee420000f0420000f2420000f4420000f6420000f8420000fa420000fc420000fe420000
+    m_ExpandedIDs: 00000000ac420000ae420000b0420000b2420000b4420000b6420000b8420000ba420000bc420000be420000c0420000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -432,10 +432,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 240}
+    scrollPos: {x: 0, y: 60}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff00000000e6420000e8420000ea420000ec420000ee420000f0420000f2420000f4420000f8420000fa420000fc420000
+    m_ExpandedIDs: ffffffff00000000ac420000ae420000b0420000b2420000b4420000b6420000b8420000ba420000bc420000be420000c0420000d8420000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -519,20 +519,20 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 30430000
+      m_SelectedIDs: b8420000
       m_LastClickedID: 0
-      m_ExpandedIDs: 70d2feffb4d3feffced3feffd2d3feff82d9feff88d9feff90d9feff98d9feffacd9feffd8dbfefff4dbfeffdadcfeffa0e2fefface2feffc2e2feffd0e2feffe8e2feff0811ffff4819ffffd820ffffa221ffffd82afffff630ffffac38ffff1240ffff6e46ffff3847ffffd84effff9855ffffb866ffff4e73ffff1a81ffff2e88ffff1aa3fffff0deffff02dfffffa8f8ffffdcf8ffff4cfaffff98faffffa2faffffd6faffffe0faffff2cfbffff6cfbffffe23c00002c3e0000403e000022f10000a00301009c0801003a2401003025010066250100d2250100642d0100d02d01003e2f0100c03801009a3a0100063b0100c4400100304101005a4201003a430100
+      m_ExpandedIDs: 48ddffff62ddffff44deffff06e4ffff0ee4ffff20e4ffff2ae4ffff3ee4ffff90eaffff80f1ffff4af2ffff6cfbffff7a3e000002500000cc5c0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: BlueTruck
-        m_OriginalName: BlueTruck
+        m_Name: sky
+        m_OriginalName: sky
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 77284
+        m_UserData: 15904
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
         m_OriginalEventType: 0
@@ -581,9 +581,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 2.0364118, y: 18.698547, z: -30.386446}
+    m_Target: {x: -28.804749, y: 149.86707, z: 958.6599}
     speed: 2
-    m_Value: {x: 2.0364118, y: 18.698547, z: -30.386446}
+    m_Value: {x: -28.804749, y: 149.86707, z: 958.6599}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -634,9 +634,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: -0.06246878, y: -0.4929185, z: 0.035469446, w: -0.867105}
   m_Size:
-    m_Target: 8.587347
+    m_Target: 641.40765
     speed: 2
-    m_Value: 8.587347
+    m_Value: 641.40765
   m_Ortho:
     m_Target: 0
     speed: 2

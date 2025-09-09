@@ -64,7 +64,7 @@ public class PlayerManager : MonoBehaviour
         checkpointSpeed = 0f;
 
         // 🔹 Keep barriers moving slowly backward
-        barrierSpeed = -Mathf.Abs(oldBarrier * 0.5f);  // 20% of normal speed
+        barrierSpeed = -Mathf.Max(0.5f, oldBarrier * 0.2f);  // 20% of normal speed
 
         yield return new WaitForSeconds(seconds);
 

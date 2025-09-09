@@ -1721,6 +1721,7 @@ MonoBehaviour:
   owner: {fileID: 21382436}
   detectDistance: 15
   obstacleTag: Obstacle
+  botJumping: 0
 --- !u!1 &525113407
 GameObject:
   m_ObjectHideFlags: 0
@@ -4541,7 +4542,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1651280648}
   m_LocalRotation: {x: -0, y: -0, z: -1, w: 0}
-  m_LocalPosition: {x: 172.80473, y: -358.86707, z: 1247.4031}
+  m_LocalPosition: {x: 172.80473, y: -383, z: 1247.4031}
   m_LocalScale: {x: 103.32988, y: 23.34871, z: 0.56437}
   m_Children: []
   m_Father: {fileID: 2091568063}
@@ -4905,6 +4906,7 @@ MonoBehaviour:
   owner: {fileID: 21382436}
   detectDistance: 15
   obstacleTag: Obstacle
+  botJumping: 0
 --- !u!1001 &1752521407
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5034,6 +5036,7 @@ MonoBehaviour:
   owner: {fileID: 21382436}
   detectDistance: 15
   obstacleTag: Obstacle
+  botJumping: 0
 --- !u!1001 &1803926816
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5994,3 +5997,4 @@ MonoBehaviour:
   owner: {fileID: 21382436}
   detectDistance: 15
   obstacleTag: Obstacle
+  botJumping: 0
