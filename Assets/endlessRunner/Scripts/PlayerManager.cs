@@ -1,95 +1,4 @@
-//using System;
-//using System.Collections;
-//using UnityEngine;
-
-//public class gameManager : MonoBehaviour
-//{
-//    public static gameManager Instance;
-
-//    [Header("Speeds")]
-//    //public float obstacleSpeed = 5f;
-//    //public float increaseSpawn = 2f;
-//    public float roadSpeed = 0.2f;
-//    public float treespeed = 2f;
-//    public float barrierSpeed = 2f;
-//    public float checkPointSpeed = 2f;
-
-//    //private float defaultObstacleSpeed;
-//    //private float defaultObstacleSpaw;
-//    private float defaultRoadSpeed;
-//    private float defaultTreeSpeed;
-//    private float defaultBarrierSpeed;
-//    private float defaultCheckPointSpeed;
-
-//    [Header("Difficulty Settings")]
-//    //public float obstacleAcceleration = 0.1f;          
-//    //public float increaseSpawnAcceleration = 1f;
-//    public float roadAcceleration = 0.01f;     
-//    public float increaseTreeSpeed = 1f;
-//    public float increaseBarrierSpeed = 1f;
-//    public float increasCheckPointSpeed = 1f;
-
-//    void Awake()
-//    {
-//        Instance = this;
-//    }
-
-//    void Start()
-//    {
-//        //defaultObstacleSpeed = obstacleSpeed;
-//        //defaultObstacleSpaw = increaseSpawn;
-//        defaultRoadSpeed = roadSpeed;
-//        defaultTreeSpeed = increaseTreeSpeed;
-//        defaultBarrierSpeed = increaseBarrierSpeed;
-//        defaultCheckPointSpeed = increasCheckPointSpeed;
-//    }
-
-//    public void StopGameForSeconds(float seconds)
-//    {
-//        StartCoroutine(StopRoutine(seconds));
-//        //StartCoroutine(IncreaseDifficultyOverTime());
-//    }
-
-//    private void Update()
-//    {
-//        //obstacleSpeed += obstacleAcceleration * Time.deltaTime;
-//        //increaseSpawn -= increaseSpawnAcceleration * Time.deltaTime;
-//        //increaseSpawn = Mathf.Max(0.3f, increaseSpawn); // minimum 0.3s delay
-//        roadSpeed += roadAcceleration * Time.deltaTime;
-//        roadSpeed = Mathf.Clamp(roadSpeed, 0.10f, 0.70f);
-//        treespeed += increaseTreeSpeed * Time.deltaTime;
-//        treespeed = Mathf.Clamp(treespeed, 2f, 70f);
-//        barrierSpeed += barrierSpeed * Time.deltaTime;
-//        checkPointSpeed += increasCheckPointSpeed * Time.deltaTime;
-//        checkPointSpeed = Mathf.Clamp(checkPointSpeed, 2f, 70f);
-
-//    }
-//    IEnumerator StopRoutine(float seconds)
-//    {
-//        //obstacleSpeed = 0f;
-//        //increaseSpawn = 0f;
-//        roadSpeed = 0f;
-//        treespeed = 0f;
-//        barrierSpeed = 0f;
-//        checkPointSpeed = 0f;
-
-//        //FindObjectOfType<obstacleSpawn>().PauseSpawning();
-
-//        yield return new WaitForSeconds(seconds);
-
-//        //obstacleSpeed = defaultObstacleSpeed;
-//        //increaseSpawn = defaultObstacleSpaw;
-//        roadSpeed = defaultRoadSpeed;
-//        treespeed *= defaultTreeSpeed;
-//        barrierSpeed *= defaultBarrierSpeed;
-//        checkPointSpeed *= defaultCheckPointSpeed;
-
-//        //FindObjectOfType<obstacleSpawn>().ResumeSpawning();
-//    }
-//}
-
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class PlayerManager : MonoBehaviour
@@ -149,7 +58,13 @@ public class PlayerManager : MonoBehaviour
         float oldBarrier = barrierSpeed;
         float oldCheckpoint = checkpointSpeed;
 
-        roadSpeed = treeSpeed = barrierSpeed = checkpointSpeed = 0f;
+        // Freeze everything except barriers (make them very slow so truck can pass)
+        roadSpeed = 0f;
+        treeSpeed = 0f;
+        checkpointSpeed = 0f;
+
+        // 🔹 Keep barriers moving slowly backward
+        barrierSpeed = -Mathf.Abs(oldBarrier * 0.5f);  // 20% of normal speed
 
         yield return new WaitForSeconds(seconds);
 

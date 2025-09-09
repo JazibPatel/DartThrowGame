@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/endlessRunner/Scenes/monsterTruckRace.unity
     guid: 2c2c57a84ac56964f9ff54de097eeec6
+  - enabled: 1
+    path: Assets/endlessRunner/Scenes/Winner.unity
+    guid: f3e3ed371ede99f46b731a6545abecb2
   m_configObjects: {}

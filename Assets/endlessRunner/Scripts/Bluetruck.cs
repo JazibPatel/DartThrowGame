@@ -1,21 +1,23 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using UnityEngine;
 using TMPro;
+
 public class Bluetruck : MonoBehaviour
 {
-    public float laneDistance = 3f; // distance between lanes
-    public float laneChangeSpeed = 5f; // smooth movement
-    public float jumpForce = 7f;
+    public float laneDistance = 1f;
+    public float laneChangeSpeed = 10f;
+    public float jumpForce = 25f;
     private bool isGrounded = true;
 
-    private int currentLane = 0; // -1 left, 0 center, 1 right
+    private int currentLane = 0;
     private Rigidbody rb;
 
     public AudioClip obstacleHitSound;
     private AudioSource audioSource;
 
     [Header("Pause time on hit")]
-    public float HoldTime;
+    public float HoldTime = 1f;
 
     private Vector2 startTouchPos;
     private Vector2 endTouchPos;
@@ -26,30 +28,61 @@ public class Bluetruck : MonoBehaviour
     public TextMeshProUGUI BlueScore;
 
     public PlayerManager owner;
+
+    public float detectDistance = 15f;   // how far ahead to check (along Z)
+    public string obstacleTag = "Obstacle";
+    public bool botJumping = false;
+
+    // 🔹 Bot-related
+    int[] easyArr = { 0, 1, 1, 0, 1, 0, 1, 0, 1, 0 };
+    int[] mediumArr = { 1, 1, 1, 0, 1, 0, 0, 1, 0, 1 };
+    int[] hardArr = { 1, 1, 1, 0, 1, 1, 1, 0, 1, 1 };
+    int[] difficultyArr;
+    int WinOrLose;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+
+        // If solo mode → setup bot difficulty
+        if (SceneLoader.instance.numOfPlayers == 1)
+        {
+            if (SceneLoader.instance.difficulty == "easy")
+                difficultyArr = easyArr;
+            else if (SceneLoader.instance.difficulty == "medium")
+                difficultyArr = mediumArr;
+            else
+                difficultyArr = hardArr;
+        }
     }
 
     void Update()
     {
-        DetectSwipe();
+        if (SceneLoader.instance.numOfPlayers == 1)
+        {
+            HandleBot(); // BOT control
+        }
+        else
+        {
+            DetectSwipe(); // PLAYER control
+        }
 
-        // Smooth lane movement
-        Vector3 targetPos = new Vector3(currentLane * laneDistance, rb.position.y, rb.position.z);
-        Vector3 newPos = Vector3.Lerp(rb.position, targetPos, Time.deltaTime * laneChangeSpeed);
-        rb.MovePosition(newPos);
+        if (isGrounded)
+        {
+            Vector3 targetPos = new Vector3(currentLane * laneDistance, rb.position.y, rb.position.z);
+            Vector3 newPos = Vector3.Lerp(rb.position, targetPos, Time.deltaTime * laneChangeSpeed);
+            rb.MovePosition(newPos);
+        }
     }
 
+    // ---------------- MANUAL CONTROL ----------------
     void DetectSwipe()
     {
-        // Touch input (for mobile)
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
 
-            // Only react to top half of screen
             if (touch.position.y > Screen.height * 0.5f)
             {
                 if (touch.phase == TouchPhase.Began)
@@ -66,7 +99,6 @@ public class Bluetruck : MonoBehaviour
             }
         }
 
-        // Mouse input (for editor testing)
         if (Input.GetMouseButtonDown(0) && Input.mousePosition.y > Screen.height * 0.5f)
         {
             startTouchPos = Input.mousePosition;
@@ -82,59 +114,94 @@ public class Bluetruck : MonoBehaviour
 
     void HandleSwipe(Vector2 swipeDelta)
     {
-        if (swipeDelta.magnitude < 50f) return; // ignore small swipes
+        if (swipeDelta.magnitude < 50f) return;
 
         if (Mathf.Abs(swipeDelta.x) > Mathf.Abs(swipeDelta.y))
         {
-            // Horizontal swipe (flipped)
-            if (swipeDelta.x < 0 && currentLane < 1)   // LEFT swipe → go RIGHT
-            {
+            if (swipeDelta.x < 0 && currentLane < 1)
                 currentLane++;
-            }
-            else if (swipeDelta.x > 0 && currentLane > -1) // RIGHT swipe → go LEFT
-            {
+            else if (swipeDelta.x > 0 && currentLane > -1)
                 currentLane--;
-            }
         }
         else
         {
-            // Vertical swipe (flipped)
-            if (swipeDelta.y < 0 && isGrounded) // Down swipe → JUMP
-            {
+            if (swipeDelta.y < 0 && isGrounded)
                 rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+    }
+
+    void HandleBot()
+    {
+        GameObject[] obstacles = GameObject.FindGameObjectsWithTag(obstacleTag);
+
+        foreach (GameObject obs in obstacles)
+        {
+            // Only check obstacles in the same lane
+            int obsLane = Mathf.RoundToInt(obs.transform.position.x / laneDistance);
+
+            if (obsLane == currentLane)
+            {
+                float zDiff = obs.transform.position.z - transform.position.z;
+
+                // If obstacle is ahead and close
+                if (zDiff > 0 && zDiff <= detectDistance)
+                {
+                    DecideAction();
+                    break; // act only once per obstacle
+                }
             }
         }
     }
 
-    //IEnumerator KnockbackWorld()
-    //{
-    //    float originalRoad = gameManager.Instance.roadSpeed;
-    //    float originalObs = gameManager.Instance.barrierSpeed;
-    //    float originalTree = gameManager.Instance.treespeed;
-    //    float originalCheck = gameManager.Instance.checkPointSpeed;
+    void DecideAction()
+    {
+        if (difficultyArr != null && difficultyArr.Length > 0)
+        {
+            WinOrLose = difficultyArr[Random.Range(0, difficultyArr.Length)];
+            Debug.Log("Bot decision: " + WinOrLose);
 
-    //    gameManager.Instance.roadSpeed = 0f;
-    //    gameManager.Instance.barrierSpeed = -originalObs * 0.01f;
-    //    gameManager.Instance.treespeed = 0f;
-    //    gameManager.Instance.checkPointSpeed = 0f;
+            if (WinOrLose == 1)
+            {
+                // Bot avoids obstacle
+                int action = Random.Range(0, 3);
 
-    //    yield return new WaitForSeconds(HoldTime);
+                if (action == 0) // Move left
+                {
+                    if (currentLane > -1) currentLane--;
+                }
+                else if (action == 1) // Move right
+                {
+                    if (currentLane < 1) currentLane++;
+                }
+                else if (action == 2) // Jump
+                {
+                    if (isGrounded)
+                    {
+                        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                        botJumping = true;
+                    }
+                    
+                }
+            }
+            else
+            {
+                // Bot fails → do nothing
+            }
+        }
+    }
 
-    //    gameManager.Instance.roadSpeed = originalRoad;
-    //    gameManager.Instance.barrierSpeed = originalObs;
-    //    gameManager.Instance.treespeed = originalTree;
-    //    gameManager.Instance.checkPointSpeed = originalCheck;
-    //}
+
+
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground2"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+            botJumping = false;
         }
-        else if (collision.gameObject.CompareTag("Obstacle2"))
+        else if (collision.gameObject.CompareTag("Obstacle"))
         {
             audioSource.PlayOneShot(obstacleHitSound, 0.3f);
-            //StartCoroutine(KnockbackWorld());
             owner.StopForSeconds(HoldTime);
         }
 
@@ -148,11 +215,10 @@ public class Bluetruck : MonoBehaviour
 
     void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground2"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
         }
     }
 }
-
 

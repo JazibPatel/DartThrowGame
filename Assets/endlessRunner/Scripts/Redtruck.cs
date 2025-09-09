@@ -5,9 +5,9 @@ using TMPro;
 
 public class Redtruck : MonoBehaviour
 {
-    public float laneDistance = 3f; // distance between lanes
-    public float laneChangeSpeed = 5f; // how smooth to move
-    public float jumpForce = 7f; // jump height
+    public float laneDistance = 1f; // distance between lanes
+    public float laneChangeSpeed = 10f; // how smooth to move
+    public float jumpForce = 25f; // jump height
     private bool isGrounded = true;
 
     private int currentLane = 0; // 0 = center, -1 = left, +1 = right
@@ -17,7 +17,7 @@ public class Redtruck : MonoBehaviour
     private AudioSource audioSource;
 
     [Header("Pause time on hit")]
-    public float HoldTime;
+    public float HoldTime = 1f;
 
     // Swipe detection
     private Vector2 startTouchPos;
