@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Winner : MonoBehaviour
 {
@@ -30,5 +31,10 @@ public class Winner : MonoBehaviour
             Camera.main.backgroundColor = Color.black;
             winnerText.color = Color.yellow;
         }
+    }
+
+    public void backBtn()
+    {
+        SceneManager.LoadScene("gameList");
     }
 }

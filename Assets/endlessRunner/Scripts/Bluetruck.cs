@@ -1,7 +1,6 @@
-﻿
-using System.Collections;
-using UnityEngine;
+﻿using System.Collections;
 using TMPro;
+using UnityEngine;
 
 public class Bluetruck : MonoBehaviour
 {
@@ -14,7 +13,11 @@ public class Bluetruck : MonoBehaviour
     private Rigidbody rb;
 
     public AudioClip obstacleHitSound;
+    public AudioClip LaneChangeSound;
     private AudioSource audioSource;
+
+    public GameObject hitEffectPrefab;
+    public Transform effectPoint;
 
     [Header("Pause time on hit")]
     public float HoldTime = 1f;
@@ -29,9 +32,20 @@ public class Bluetruck : MonoBehaviour
 
     public PlayerManager owner;
 
-    public float detectDistance = 15f;   // how far ahead to check (along Z)
+    public float detectDistance = 15f; // how far ahead to check (along Z)
     public string obstacleTag = "Obstacle";
     public bool botJumping = false;
+
+    public TrailRenderer frontRightTrail;
+    public TrailRenderer backRightTrail;
+    public TrailRenderer frontLeftTrail;
+    public TrailRenderer backLeftTrail;
+
+    // Trail control
+    private Coroutine tireCoroutine = null;
+    public float tireDuration = 0.5f;          // how long the trail should remain (subject to grounded check)
+    public float landingCooldown = 0.1f;       // short buffer after landing before trails allowed
+    private float lastLandedTime = -10f;
 
     // 🔹 Bot-related
     int[] easyArr = { 0, 1, 1, 0, 1, 0, 1, 0, 1, 0 };
@@ -55,6 +69,9 @@ public class Bluetruck : MonoBehaviour
             else
                 difficultyArr = hardArr;
         }
+
+        // ensure trails start off
+        DisableTrails();
     }
 
     void Update()
@@ -70,7 +87,11 @@ public class Bluetruck : MonoBehaviour
 
         if (isGrounded)
         {
-            Vector3 targetPos = new Vector3(currentLane * laneDistance, rb.position.y, rb.position.z);
+            Vector3 targetPos = new Vector3(
+                currentLane * laneDistance,
+                rb.position.y,
+                rb.position.z
+            );
             Vector3 newPos = Vector3.Lerp(rb.position, targetPos, Time.deltaTime * laneChangeSpeed);
             rb.MovePosition(newPos);
         }
@@ -112,16 +133,73 @@ public class Bluetruck : MonoBehaviour
         }
     }
 
+    void SpawnTireMark()
+    {
+        // don't spawn if mid-air or bot is in a jump state, or if just landed (cooldown)
+        if (!isGrounded || botJumping) return;
+        if (Time.time - lastLandedTime < landingCooldown) return;
+
+        // restart coroutine if already running
+        if (tireCoroutine != null) StopCoroutine(tireCoroutine);
+        tireCoroutine = StartCoroutine(EnableTireTrail());
+    }
+
+    IEnumerator EnableTireTrail()
+    {
+        // final pre-check: if we are not grounded then bail out
+        if (!isGrounded || botJumping)
+        {
+            tireCoroutine = null;
+            yield break;
+        }
+
+        // enable
+        frontRightTrail.emitting = true;
+        backRightTrail.emitting = true;
+        frontLeftTrail.emitting = true;
+        backLeftTrail.emitting = true;
+
+        float elapsed = 0f;
+        while (elapsed < tireDuration)
+        {
+            // if truck leaves ground or bot starts jumping, stop immediately
+            if (!isGrounded || botJumping) break;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // disable
+        DisableTrails();
+        tireCoroutine = null;
+    }
+
+    void DisableTrails()
+    {
+        frontRightTrail.emitting = false;
+        backRightTrail.emitting = false;
+        frontLeftTrail.emitting = false;
+        backLeftTrail.emitting = false;
+    }
+
     void HandleSwipe(Vector2 swipeDelta)
     {
-        if (swipeDelta.magnitude < 50f) return;
+        if (swipeDelta.magnitude < 50f)
+            return;
 
         if (Mathf.Abs(swipeDelta.x) > Mathf.Abs(swipeDelta.y))
         {
             if (swipeDelta.x < 0 && currentLane < 1)
+            {
                 currentLane++;
+                if (isGrounded && !botJumping) SpawnTireMark();
+                audioSource.PlayOneShot(LaneChangeSound);
+            }
             else if (swipeDelta.x > 0 && currentLane > -1)
+            {
                 currentLane--;
+                if (isGrounded && !botJumping) SpawnTireMark();
+                audioSource.PlayOneShot(LaneChangeSound);
+            }
         }
         else
         {
@@ -167,11 +245,21 @@ public class Bluetruck : MonoBehaviour
 
                 if (action == 0) // Move left
                 {
-                    if (currentLane > -1) currentLane--;
+                    if (currentLane > -1)
+                    {
+                        currentLane--;
+                        if (isGrounded && !botJumping) SpawnTireMark();
+                        audioSource.PlayOneShot(LaneChangeSound);
+                    }
                 }
                 else if (action == 1) // Move right
                 {
-                    if (currentLane < 1) currentLane++;
+                    if (currentLane < 1)
+                    {
+                        currentLane++;
+                        if (isGrounded && !botJumping) SpawnTireMark();
+                        audioSource.PlayOneShot(LaneChangeSound);
+                    }
                 }
                 else if (action == 2) // Jump
                 {
@@ -180,7 +268,6 @@ public class Bluetruck : MonoBehaviour
                         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                         botJumping = true;
                     }
-                    
                 }
             }
             else
@@ -189,8 +276,6 @@ public class Bluetruck : MonoBehaviour
             }
         }
     }
-
-
 
     void OnCollisionEnter(Collision collision)
     {
@@ -201,8 +286,23 @@ public class Bluetruck : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Obstacle"))
         {
-            audioSource.PlayOneShot(obstacleHitSound, 0.3f);
+            audioSource.PlayOneShot(obstacleHitSound);
             owner.StopForSeconds(HoldTime);
+
+            if (hitEffectPrefab != null)
+            {
+                // Spawn effect at effectPoint (child of truck) or fallback to truck position
+                Transform parent = effectPoint != null ? effectPoint : transform;
+                GameObject effect = Instantiate(
+                    hitEffectPrefab,
+                    parent.position,
+                    Quaternion.identity,
+                    parent
+                );
+
+                // Auto-destroy after 1 second
+                Destroy(effect, 2f);
+            }
         }
 
         if (collision.gameObject.CompareTag("CheckPoint"))
@@ -221,4 +321,3 @@ public class Bluetruck : MonoBehaviour
         }
     }
 }
-

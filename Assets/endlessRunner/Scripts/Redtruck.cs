@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -14,6 +14,7 @@ public class Redtruck : MonoBehaviour
     private Rigidbody rb;
 
     public AudioClip ObsticalHitSound;
+    public AudioClip LaneChangeSound;
     private AudioSource audioSource;
 
     [Header("Pause time on hit")]
@@ -29,11 +30,25 @@ public class Redtruck : MonoBehaviour
     public TextMeshProUGUI RedScore;
 
     public PlayerManager owner;
+
+    public GameObject hitEffectPrefab;
+    public Transform effectPoint;
+
+    public TrailRenderer frontRightTrail;
+    public TrailRenderer backRightTrail;
+    public TrailRenderer frontLeftTrail;
+    public TrailRenderer backLeftTrail;
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
-        
+
+        frontRightTrail.emitting = false;
+        backRightTrail.emitting = false;
+        frontLeftTrail.emitting = false;
+        backLeftTrail.emitting = false;
+
+
     }
 
     void Update()
@@ -84,6 +99,29 @@ public class Redtruck : MonoBehaviour
         }
     }
 
+    void SpawnTireMark()
+    {
+        Debug.Log("Tire mark triggered!");
+        StartCoroutine(EnableTireTrail());
+    }
+
+    IEnumerator EnableTireTrail()
+    {
+        frontRightTrail.emitting = true;
+        backRightTrail.emitting = true;
+        frontLeftTrail.emitting = true;
+        backLeftTrail.emitting = true;
+        
+        yield return new WaitForSeconds(0.5f); // how long marks show
+
+        frontRightTrail.emitting = false;
+        backRightTrail.emitting = false;
+        frontLeftTrail.emitting = false;
+        backLeftTrail.emitting = false;
+
+    }
+
+
     void HandleSwipe(Vector2 swipeDelta)
     {
         if (swipeDelta.magnitude < 50f) return; // ignore small swipes
@@ -94,10 +132,16 @@ public class Redtruck : MonoBehaviour
             if (swipeDelta.x < 0 && currentLane > -1)
             {
                 currentLane--; // swipe left
+                if (isGrounded) SpawnTireMark();
+                audioSource.PlayOneShot(LaneChangeSound);
+                
             }
             else if (swipeDelta.x > 0 && currentLane < 1)
             {
                 currentLane++; // swipe right
+                if (isGrounded) SpawnTireMark();
+                audioSource.PlayOneShot(LaneChangeSound);
+              
             }
         }
         else
@@ -139,9 +183,20 @@ public class Redtruck : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Obstacle"))
         {
-            audioSource.PlayOneShot(ObsticalHitSound, 0.3f);
+            audioSource.PlayOneShot(ObsticalHitSound);
             owner.StopForSeconds(HoldTime);
             //StartCoroutine(KnockbackWorld());
+
+            if (hitEffectPrefab != null)
+            {
+                // Spawn effect at effectPoint (child of truck) or fallback to truck position
+                Transform parent = effectPoint != null ? effectPoint : transform;
+                GameObject effect = Instantiate(hitEffectPrefab, parent.position, Quaternion.identity, parent);
+
+                // Auto-destroy after 1 second
+                Destroy(effect, 2f);
+            }
+
         }
 
         if (collision.gameObject.CompareTag("CheckPoint"))
