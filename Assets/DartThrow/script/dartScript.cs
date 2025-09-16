@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class dartScript : MonoBehaviour
@@ -26,10 +26,8 @@ public class dartScript : MonoBehaviour
 
     private void Update()
     {
-        if (isThrown || inputLocked || Time.time < lastThrowTime + throwCooldown)
-            return;
-        if (scoreManager.instance == null)
-            return;
+        if (isThrown || inputLocked || Time.time < lastThrowTime + throwCooldown) return;
+        if (scoreManager.instance == null) return;
 
         bool isSoloMode = scoreManager.instance.IsSoloMode;
         Vector3 mousePos = Input.mousePosition;
@@ -65,7 +63,8 @@ public class dartScript : MonoBehaviour
     private IEnumerator BotThrowRoutine()
     {
         string difficulty = scoreManager.instance.Difficulty;
-        int winOrLose = scoreManager.instance.WinOrLose; // Access the WinOrLose value
+        int winOrLose = scoreManager.instance.GetWinOrLose(); // Now fetched dynamically each turn
+        Debug.Log("winorlose = " + winOrLose);
 
         int[] targetScores;
 
@@ -74,14 +73,13 @@ public class dartScript : MonoBehaviour
             switch (difficulty.ToLower())
             {
                 case "easy":
-
-                    targetScores = new int[] { 2, 3 }; // Moderate-high for easy win
+                    targetScores = new int[] { 1,2 }; // Slight win
                     break;
                 case "medium":
-                    targetScores = new int[] { 3, 4 }; // High for medium win
+                    targetScores = new int[] { 2, 3 }; // Moderate win
                     break;
                 default: // hard
-                    targetScores = new int[] { 2, 3, 4, 5 }; // Only best for hard win
+                    targetScores = new int[] { 4, 5 }; // Strong win
                     break;
             }
         }
@@ -90,50 +88,44 @@ public class dartScript : MonoBehaviour
             switch (difficulty.ToLower())
             {
                 case "easy":
-
-                    targetScores = new int[] { 1 }; // Very low for easy lose
+                    targetScores = new int[] { 1 }; // Always bad score
                     break;
                 case "medium":
-                    targetScores = new int[] { 1, 2 }; // Low for medium lose
+                    targetScores = new int[] { 2 }; // Lower medium score
                     break;
                 default: // hard
-                    targetScores = new int[] { 1, 2 }; // Mid-low for hard lose (still challenging)
+                    targetScores = new int[] { 4 }; // Lower hard score
                     break;
             }
         }
 
         float dartTravelTime = 2f;
         float aimTolerance = 10f;
-
-        float maxWaitTime = 5f; // Prevent bot from getting stuck
-
+        float maxWaitTime = 5f;
         float startTime = Time.time;
 
         while (Time.time < startTime + maxWaitTime)
         {
             var (predictedScore, angleToTop) = rotator.ClosestZoneToTopAfter(dartTravelTime);
 
-            if (
-                System.Array.Exists(targetScores, score => score == predictedScore)
-                && angleToTop <= aimTolerance
-            )
+            if (System.Array.Exists(targetScores, score => score == predictedScore) && angleToTop <= aimTolerance)
             {
-                ThrowDart(true); // Bot throws
-
+                ThrowDart(true);
                 yield break;
             }
             yield return null;
         }
 
-        // Fallback: Throw if no ideal condition is met
+        // If no perfect timing found, just throw anyway
         ThrowDart(true);
-        yield break;
     }
+
+
+
 
     private void ThrowDart(bool isBot = false)
     {
-        if (isThrown)
-            return;
+        if (isThrown) return;
 
         isThrown = true;
 

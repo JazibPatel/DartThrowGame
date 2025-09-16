@@ -26,4 +26,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/BalloonPop/Scenes/balloonPopScene.unity
     guid: 40aa0cfe4fe9ff844b66df72c85b2dbe
+  - enabled: 1
+    path: Assets/Bowling/Scenes/BowlingScene.unity
+    guid: e61f8088fa021dd4a85c347bb0a7f9c3
+  - enabled: 1
+    path: Assets/Bowling/Scenes/BowlingWinnerScene.unity
+    guid: 8467694bd31f34746a062b251df6eaad
   m_configObjects: {}

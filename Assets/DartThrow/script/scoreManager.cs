@@ -1,6 +1,4 @@
-
-using TMPro;
-
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -29,10 +27,10 @@ public class scoreManager : MonoBehaviour
     private bool isSoloMode;
     private string difficulty;
 
+    // Arrays controlling bot win/lose bias
     private int[] easyArr = { 0, 1, 1, 0, 1, 0, 1, 0, 1, 0 };
     private int[] mediumArr = { 1, 1, 1, 0, 1, 0, 0, 1, 0, 1 };
     private int[] hardArr = { 1, 1, 1, 0, 1, 1, 1, 0, 1, 1 };
-    public int WinOrLose;
 
     void Awake()
     {
@@ -50,29 +48,11 @@ public class scoreManager : MonoBehaviour
 
         Debug.Log($"Mode: {(isSoloMode ? "Solo" : "Duo")} | Difficulty: {difficulty}");
 
-        if (isSoloMode)
-        {
-            int[] difficultyArr = new int[10];
-            switch (difficulty.ToLower())
-            {
-                case "easy":
-                    System.Array.Copy(easyArr, difficultyArr, easyArr.Length);
-                    break;
-                case "medium":
-                    System.Array.Copy(mediumArr, difficultyArr, mediumArr.Length);
-                    break;
-                default: // hard
-                    System.Array.Copy(hardArr, difficultyArr, hardArr.Length);
-                    break;
-            }
-            WinOrLose = difficultyArr[UnityEngine.Random.Range(0, difficultyArr.Length)];
-            Debug.Log($"Bot WinOrLose: {WinOrLose}"); // For testing
-        }
-
+        // Spawn initial darts for both players
+        spawner.SpawnDart(1);
         spawner.SpawnDart(2); // Always spawn blue dart, even in solo mode
     }
 
-    // Public getters for dartScript
     // Called by dartScript to decide bot's goal for *this turn*
     public int GetWinOrLose()
     {
@@ -121,15 +101,12 @@ public class scoreManager : MonoBehaviour
         if (playerNumber == 1)
         {
             redDartsThrown++;
-
-            spawner.UpdateQueue(playerNumber); // Spawn next
-
+            spawner.UpdateQueue(playerNumber);
         }
         else
         {
             blueDartsThrown++;
-
-            spawner.UpdateQueue(playerNumber); // Spawn next
+            spawner.UpdateQueue(playerNumber);
         }
 
         if (!gameOver && redDartsThrown >= maxDarts && blueDartsThrown >= maxDarts)

@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class exitBtn : MonoBehaviour
+public class backBtn : MonoBehaviour
 {
 
-    public void ExitBtn()
+    public void BackBtn()
     {
         SceneManager.LoadScene("gameList");
     }

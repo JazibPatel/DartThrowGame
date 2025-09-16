@@ -11,13 +11,8 @@ GameObject:
   - component: {fileID: 3101535918105189996}
   - component: {fileID: 3101535918105189997}
   - component: {fileID: 3101535918105189985}
-<<<<<<< HEAD
-  - component: {fileID: 8701833438912123830}
-  - component: {fileID: 1534135172732322207}
-=======
   - component: {fileID: 9215366415026522032}
   - component: {fileID: 8701833438912123830}
->>>>>>> 809d5065289469830f2b575a3eca940340a9340d
   m_Layer: 0
   m_Name: dartBlue
   m_TagString: dart
@@ -111,8 +106,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 5
-<<<<<<< HEAD
-=======
 --- !u!114 &9215366415026522032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,7 +124,6 @@ MonoBehaviour:
   playerNumber: 2
   hitEffect: {fileID: 5671074258377530418, guid: d6932455ee33cb048aba53c4b9a0bd00, type: 3}
   stickSound: {fileID: 8300000, guid: 9c99f4a6cf9c9324481ffce3ffbe1b0f, type: 3}
->>>>>>> 809d5065289469830f2b575a3eca940340a9340d
 --- !u!60 &8701833438912123830
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -222,24 +214,3 @@ PolygonCollider2D:
       - {x: -2.3799999, y: -2.56}
       - {x: -1.3299999, y: -1.51}
       - {x: -1.31, y: -1.51}
-<<<<<<< HEAD
---- !u!114 &1534135172732322207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3101535918105189998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc8c6aecb63f37147bfb049da84ed9cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  throwForce: 100
-  rb: {fileID: 3101535918105189985}
-  isThrown: 0
-  playerNumber: 1
-  hitEffect: {fileID: 5671074258377530418, guid: d6932455ee33cb048aba53c4b9a0bd00, type: 3}
-  stickSound: {fileID: 8300000, guid: 9c99f4a6cf9c9324481ffce3ffbe1b0f, type: 3}
-=======
->>>>>>> 809d5065289469830f2b575a3eca940340a9340d

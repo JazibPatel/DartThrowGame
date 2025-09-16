@@ -247,15 +247,15 @@ PlayerSettings:
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: 
-  AndroidKeyaliasName: 
+  AndroidKeystoreName: '{inproject}: user.keystore'
+  AndroidKeyaliasName: twoplayergame
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
   AndroidIsGame: 1
   AndroidEnableTango: 0
   androidEnableBanner: 1
   androidUseLowAccuracyLocation: 0
-  androidUseCustomKeystore: 0
+  androidUseCustomKeystore: 1
   m_AndroidBanners:
   - width: 320
     height: 180
@@ -271,7 +271,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: b4c358a64c234014296413edf390dc06, type: 3}
+      m_Icon: {fileID: 2800000, guid: 3d0ab59b9c3276345a020ba97f3e97d5, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
@@ -631,7 +631,22 @@ PlayerSettings:
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    1: DOTWEEN
+    4: DOTWEEN
+    7: DOTWEEN
+    13: DOTWEEN
+    14: DOTWEEN
+    19: DOTWEEN
+    21: DOTWEEN
+    25: DOTWEEN
+    27: DOTWEEN
+    28: DOTWEEN
+    29: DOTWEEN
+    30: DOTWEEN
+    31: DOTWEEN
+    32: DOTWEEN
+    33: DOTWEEN
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
