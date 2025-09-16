@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
+    <Compile Include="Assets\Bowling\Scripts\gameManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
@@ -73,6 +74,8 @@
     <Compile Include="Assets\BalloonPop\Scripts\balloon.cs" />
     <Compile Include="Assets\1_2_Player\script\gameExitBtn.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
+    <Compile Include="Assets\Bowling\Scripts\ball.cs" />
+    <Compile Include="Assets\Bowling\Scripts\bowlingScoreManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
     <Compile Include="Assets\BalloonPop\Scripts\dart_spawner.cs" />
@@ -94,13 +97,16 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\endlessRunner\Scripts\PlayerManager.cs" />
+    <Compile Include="Assets\Bowling\Scripts\winner.cs" />
     <Compile Include="Assets\DartThrow\script\dartSpawner.cs" />
     <Compile Include="Assets\1_2_Player\script\sceneManager.cs" />
     <Compile Include="Assets\endlessRunner\Scripts\checkPoint.cs" />
     <Compile Include="Assets\1_2_Player\script\gameLoader.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Bowling\Scripts\exitBtn.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
+    <Compile Include="Assets\Bowling\Scripts\demo.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
@@ -110,17 +116,12 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\endlessRunner\Scripts\backBtn.cs" />
+    <Compile Include="Assets\Bowling\Scripts\pin.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\endlessRunner\Scripts\result.cs" />
     <Compile Include="Assets\scr.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
-    <Compile Include="Assets\Bowling\Scripts\ball.cs" />
-    <Compile Include="Assets\Bowling\Scripts\gameManager.cs" />
-    <Compile Include="Assets\Bowling\Scripts\bowlingScoreManager.cs" />
-    <Compile Include="Assets\Bowling\Scripts\winner.cs" />
-    <Compile Include="Assets\Bowling\Scripts\pin.cs" />
-    <Compile Include="Assets\Bowling\Scripts\exitBtn.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
