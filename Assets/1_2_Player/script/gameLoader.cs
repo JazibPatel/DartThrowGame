@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +9,13 @@ public class gameLoader : MonoBehaviour
     // Load the selected game
     public void LoadGame()
     {
+        StartCoroutine(LoadGameWithDelay());
+    }
+
+    private IEnumerator LoadGameWithDelay()
+    {
+        yield return new WaitForSeconds(0.5f); 
+
         // Use SceneLoader if it exists
         if (SceneLoader.instance != null)
         {
@@ -15,7 +23,6 @@ public class gameLoader : MonoBehaviour
         }
         else
         {
-            // Fallback (shouldn't happen unless SceneLoader missing)
             SceneManager.LoadScene(sceneToLoad);
         }
     }

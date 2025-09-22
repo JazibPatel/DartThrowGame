@@ -15,9 +15,12 @@ public class gameManager : MonoBehaviour
     public Transform ballSpawn;
     public Transform[] pinSpawns; // 10 pin spawn points
 
-    [Header("Background")]
-    public Transform backgroundTransform;
-    private bool backgroundFlipped = false;
+    [Header("Obstacles")]
+    public GameObject[] obstacles; // Assign 5 obstacles in Inspector
+
+    //[Header("Background")]
+    //public Transform backgroundTransform;
+    //private bool backgroundFlipped = false;
 
     private int currentPlayer = 1;
     private GameObject currentBall;
@@ -39,6 +42,7 @@ public class gameManager : MonoBehaviour
     {
         camMain = Camera.main;
         SpawnBallAndPins();
+        UpdateObstacles(); // initialize
     }
 
     public int GetCurrentPlayer()
@@ -63,24 +67,24 @@ public class gameManager : MonoBehaviour
         {
             camMain.transform.DORotateQuaternion(Quaternion.Euler(77.237f, 0, 0), 1.0f);
         }
-        
+
         cameraFlip = !cameraFlip;
         cameraFlipCount++;
         Debug.Log("Count : " + cameraFlipCount);
         bowlingScoreManager.Instance.checkWinner();
 
-        // Flip background scale
-        Vector3 scale = backgroundTransform.localScale;
-        scale.x *= -1;
-        scale.y *= -1;
-        backgroundTransform.localScale = scale;
+        //// Flip background scale
+        //Vector3 scale = backgroundTransform.localScale;
+        //scale.x *= -1;
+        //scale.y *= -1;
+        //backgroundTransform.localScale = scale;
 
-        // Manually adjust background Y position
-        Vector3 pos = backgroundTransform.localPosition;
-        pos.y = backgroundFlipped ? 177f : -177f;
-        backgroundTransform.localPosition = pos;
+        //// Manually adjust background Y position
+        //Vector3 pos = backgroundTransform.localPosition;
+        //pos.y = backgroundFlipped ? 177f : -177f;
+        //backgroundTransform.localPosition = pos;
 
-        backgroundFlipped = !backgroundFlipped;
+        //backgroundFlipped = !backgroundFlipped;
 
         // Destroy old ball & pins
         if (currentBall)
@@ -98,6 +102,9 @@ public class gameManager : MonoBehaviour
 
         // Spawn new ball & pins
         SpawnBallAndPins();
+
+        // ✅ Update obstacles after each camera flip
+        UpdateObstacles();
     }
 
     private void SpawnBallAndPins()
@@ -120,6 +127,23 @@ public class gameManager : MonoBehaviour
         for (int i = 0; i < pinSpawns.Length; i++)
         {
             currentPins[i] = Instantiate(pinPrefab, pinSpawns[i].position, pinSpawns[i].rotation);
+        }
+    }
+
+    private void UpdateObstacles()
+    {
+        foreach (var obs in obstacles)
+        {
+            if (obs)
+                obs.SetActive(false);
+        }
+
+        // Determine which obstacle to show
+        int index = cameraFlipCount / 2; // 0-1 -> 0, 2-3 -> 1, etc.
+
+        if (index >= 0 && index < obstacles.Length)
+        {
+            obstacles[index].SetActive(true);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -33,21 +34,29 @@ public class SceneLoader : MonoBehaviour
     {
         numOfPlayers = 2;
         difficulty = ""; // Duo mode has no difficulty
-        LoadGameList();
+
+        StartCoroutine(LoadGameList());
     }
 
     // Called when user selects Solo Stage (Easy/Medium/Hard)
     public void SelectSoloDifficulty(string diff)
     {
         difficulty = diff;
-        LoadGameList();  // Load same game list for solo mode
+
+        StartCoroutine(LoadGameList());  // Load same game list for solo mode
     }
 
     // Load Game List Scene (same for Solo & Duo)
-    public void LoadGameList()
+
+    private IEnumerator LoadGameList()
     {
+        yield return new WaitForSeconds(0.5f);
         SceneManager.LoadScene("gameList");
     }
+    //public void LoadGameList()
+    //{
+    //    SceneManager.LoadScene("gameList");
+    //}
 
     // Used by game list buttons to load a game (like Dart Throw)
     public void LoadGame(string gameSceneName)

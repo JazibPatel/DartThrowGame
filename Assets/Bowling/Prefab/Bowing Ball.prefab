@@ -93,7 +93,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5238876935064160719}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 9b7547ef4eae59f4aa528939ad5526d2, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forceMultiplier: 50
   ballSound: {fileID: 8300000, guid: 2500d8d7e6c13914eb4895ac737f197c, type: 3}
-  pinSound: {fileID: 8300000, guid: 01eff3f78b0b1b649b77c5412f3e6d39, type: 3}
+  pinSound: {fileID: 8300000, guid: 685a474b3823e2e47b31bda3139a532d, type: 3}
 --- !u!82 &-7094603068393745001
 AudioSource:
   m_ObjectHideFlags: 0

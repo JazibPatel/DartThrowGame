@@ -233,6 +233,7 @@ public class Bluetruck : MonoBehaviour
 
     void DecideAction()
     {
+
         if (difficultyArr != null && difficultyArr.Length > 0)
         {
             WinOrLose = difficultyArr[Random.Range(0, difficultyArr.Length)];
@@ -263,10 +264,11 @@ public class Bluetruck : MonoBehaviour
                 }
                 else if (action == 2) // Jump
                 {
-                    if (isGrounded)
+                    if ( isGrounded && !botJumping)
                     {
                         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                         botJumping = true;
+                        isGrounded = false;
                     }
                 }
             }
